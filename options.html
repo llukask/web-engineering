@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="author" content="Andriy Sydoruk"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img  id="logo"
+        src="img/big-logo-small.png"
+        alt="BIG Smart Home Logo"/>
+    <h1>BIG Smart Home</h1>
+    <form action="login.html" method="post">
+      <button class="button_header" >Abmelden</button>
+    </form>
+  </header>
+
+  <form id="loginform" action="" method="post">
+      <h2>Passwort &auml;ndern</h2>
+      <div  class="form_row">
+        <label for="aPass">Altes Passwort</label>
+        <input type="text" id="aPass" name="altesPass" placeholder="Altes Passwort">
+      </div>
+      <br />
+
+      <div  class="form_row">
+          <label for="nPass">Neues Passwort</label>
+          <input type="text" id="nPass" name="neuesPass" placeholder="Neues Passwort">
+      </div>
+      <br />
+      <div  class="form_row">
+          <label for="PassW">Passwort wiederholen</label>
+          <input type="text" id="PassW" name="PassWieder" placeholder="Neues Passwort wiederholen">
+      </div>
+      <br />
+
+      <button id="bt_submit">&Auml;nderung speichern</button>
+  </form>
+
+</body>
+</html>

@@ -100,6 +100,17 @@ h2 {
   border-style: solid;
 }
 
+.button_header {
+  float: right;
+  width: auto;
+  border: 2px solid #003b7c;
+  background: linear-gradient(#006bac, #003b7c);
+  color: white;
+  padding: 15px 32px;
+  margin: 10px 10px;
+  border-radius: 5px;
+}
+
 /*@media screen and (min-width: 400px) {
   body {
   }
