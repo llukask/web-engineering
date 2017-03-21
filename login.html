@@ -1,3 +1,33 @@
-<html>
-<p>test</p>
+<!doctype html>
+<html xml:lang="de">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Ivan Krastev"/>
+    <!-- Recommended for devices like Smartphones -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Anmelden - BIG Smart Home</title>
+  </head>
+  <body>
+    <header>
+      <img src="img/big-logo-small.png" alt="BIG Smart Home Logo"/>
+      <h1>BIG Smart Home</h1>
+    </header>
+    <main>
+      <form id="loginform" action="overview.html" method="post">
+        <h2>Anmelden</h2>
+        <label for="username">Benutzername</label>
+        <input type="text" name="username" id="username" required/>
+        <label for="password">Passwort</label>
+        <input type="password" name="password" id="password" required/>
+        <input type="submit" value="Anmelden"/>
+      </form>
+    </main>
+    <footer>
+      <p>&copy; 2017 BIG Smart Home</p>
+    </footer>
+  </body>
 </html>
