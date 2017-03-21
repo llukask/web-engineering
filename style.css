@@ -1,0 +1,71 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background-color: f2f4f8;
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgb(252,120,0); /* For browsers that do not support gradients */
+  background: linear-gradient(rgb(252,120,0), rgb(204,72,0));
+  white-space: nowrap;
+  box-shadow: 0mm 0mm 5mm #666666;
+}
+
+main {
+  margin-top: 2cm;
+}
+
+footer {
+}
+
+h2 {
+  font-family: sans-serif;
+}
+h1 {
+  display: inline;
+  font-family: sans-serif;
+  font-size: 7mm;
+  color: rgb(51,51,51);
+  vertical-align: middle;
+}
+
+#logo {
+  display: inline;
+  height: 3em;
+  width: 3em;
+  margin: 0.5em;
+  vertical-align: middle;
+}
+#lb_pwd, #lb_username {
+  display: inline-block;
+  width: 3cm;
+}
+#in_pwd, #in_username {
+  display: inline-block;
+  width: 200px;
+}
+
+@media screen and (min-width: 400px) {
+  body {
+  }
+}
+
+@media screen and (min-width: 600px) {
+  body {
+  }
+}
+
+@media screen and (min-width: 768px) {
+  body {
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  body {
+  }
+}
