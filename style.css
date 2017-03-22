@@ -1,0 +1,25 @@
+ul#overview-grid > li {
+  width: 600px;
+  height: 200px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+ul#overview-grid > li > img {
+  height: 160px;
+  padding: 20px;
+}
+
+ul#overview-grid > li > div.tile-content {
+  display: inline-block;
+  height: 200px;
+  width: 396px;
+}
+
+.actions > a > img {
+  height: 20px;
+}
+
+footer {
+  text-align: justify;
+}
