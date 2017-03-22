@@ -27,7 +27,7 @@
         </div>
         <div class="form_row">
           <label for="in_pwd">Passwort</label>
-          <input type="password" name="password" required/>
+          <input type="password" name="password" pattern="^.*(?=.{8,13})(?=.*[a-zA-Z])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$" required/>
         </div>
         <input id="bt_submit" type="submit" value="Anmelden"/>
       </form>

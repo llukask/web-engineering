@@ -97,6 +97,10 @@ h2 {
   align-self: center;
 }
 
+#bt_submit:hover {
+  opacity: 0.9;
+}
+
 .form_row {
   display: flex;
   justify-content: space-between;
