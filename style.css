@@ -125,7 +125,7 @@ h2 {
   border-style: solid;
 }
 
-.bt_header {
+.bt_header{
   float: right;
   width: auto;
   border: 1px solid #003b7c;
@@ -134,6 +134,62 @@ h2 {
   padding: 15px 32px;
   margin: 10px 10px;
   border-radius: 5px;
+}
+.dropbtn {
+  display: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    width: auto;
+    border: 1px solid #003b7c;
+    background: linear-gradient(#006bac, #003b7c);
+    color: white;
+    padding: 15px 32px;
+    margin: 10px 10px;
+    border-radius: 5px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+}
+
+
+
+.dropdown-content a {
+    text-decoration: none;
+    display: block;
+    width: auto;
+    border: 1px solid #003b7c;
+    background: linear-gradient(#006bac, #003b7c);
+    color: white;
+    padding: 15px 32px;
+    /*/margin: 10px 10px;*/
+    border-radius: 5px;
+}
+.dropdown-content-visible a {
+  text-decoration: none;
+  float: right;
+  width: auto;
+  border: 1px solid #003b7c;
+  background: linear-gradient(#006bac, #003b7c);
+  color: white;
+  padding: 15px 32px;
+  //margin: 10px 10px 10px 10px;
+  border-radius: 5px;
+}
+
+.dropdown-content a:hover {
+  //background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 #indicator {
@@ -163,10 +219,17 @@ h2 {
   }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (max-width: 600px) {
   #indicator {
     background-color: green;
   }
+  .dropbtn{
+    display: block;
+  }
+  .dropdown-content-visible a{
+    display: none;
+  }
+
 }
 
 @media screen and (min-width: 768px) {
