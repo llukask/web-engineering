@@ -24,11 +24,11 @@
         <h2>Anmelden</h2>
         <div class="form_row">
           <label for="username">Benutzername</label>
-          <input type="text" name="username" required/>
+          <input type="text" id="username" name="username" required/>
         </div>
         <div class="form_row">
           <label for="password">Passwort</label>
-          <input type="password" name="password" pattern="^.*(?=.{8,13})(?=.*[a-zA-Z])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$" required/>
+          <input type="password" id="password" name="password" pattern="^.*(?=.{8,13})(?=.*[a-zA-Z])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$" required/>
         </div>
         <input id="bt_submit" type="submit" value="Anmelden"/>
       </form>
