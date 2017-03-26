@@ -143,7 +143,12 @@ h2 {
     position: absolute;
 }
 
-
+.hamburger{
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+}
 
 .dropdown-content a {
     text-decoration: none;
