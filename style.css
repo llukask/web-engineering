@@ -29,6 +29,7 @@ header {
   background: linear-gradient(#fc7800, #cc4800);
   white-space: nowrap;
   box-shadow: 0 0 1.5em #666666;
+  z-index: 1;
 }
 
 footer {
@@ -120,8 +121,7 @@ h2 {
 }
 
 .dropbtn {
-  display: none;
-    color: white;
+    display: none;
     font-size: 16px;
     cursor: pointer;
     width: auto;
@@ -141,10 +141,11 @@ h2 {
 .dropdown-content {
     display: none;
     position: absolute;
+    z-index: 1;
 }
 
 .hamburger{
-    width: 35px;
+    width: 30px;
     height: 5px;
     background-color: white;
     margin: 6px 0;
@@ -257,7 +258,8 @@ dl.server-stats > dt {
 }
 
 dl.server-stats > dd {
-  float: left;
+  float: right;
+  text-align: right;
   width: 50%;
 }
 
@@ -281,7 +283,8 @@ h4 {
 
 aside {
   box-sizing: border-box;
-  height: 100%;
+  width: auto;
+  height: auto;
   margin: 4px;
   flex: 1;
   flex-basis: 20%;
