@@ -184,25 +184,29 @@ ul#overview-grid {
 
 ul#overview-grid > li {
   flex: 1;
-  height: 200px;
+  height: 180px;
   width: 48%;
   float: left;
   overflow: hidden;
-  border: 1px;
-  margin: 3px;
-  border-style: solid;
+  /* border: 1px; */
+  margin: 5px;
+  /* border-style: solid; */
+  border-radius: 8px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 ul#overview-grid > li > img {
   height: 80%;
   float: left;
-  margin: 5%;
+  margin: 3.5%;
 }
 
 ul#overview-grid > li > .tile-content {
   height: 100%;
-  float: left;
+  overflow: hidden;
   width: auto;
+  background-color: white;
+  padding-left: 5%;
 }
 
 ul#overview-grid > li > .tile-content > .actions > a > img {
@@ -212,17 +216,16 @@ ul#overview-grid > li > .tile-content > .actions > a > img {
 .content {
   width: 100%;
   margin-top: 5%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 main {
-  width: 70%;
+  width: 80%;
   float: left;
-  overflow: hidden;
 }
 
 aside {
-  width: 30%;
+  width: 20%;
   float: left;
 }
 
@@ -264,6 +267,12 @@ aside {
     display: none;
   }
 
+}
+
+@media screen and (max-width: 768px) {
+  ul#overview-grid > li {
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 768px) {
