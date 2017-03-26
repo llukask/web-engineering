@@ -1,5 +1,5 @@
 <!doctype html>
-<html xml:lang="de">
+<html lang="de">
   <head>
     <meta charset="utf-8"/>
     <meta name="author" content="Ivan Krastev"/>
@@ -23,11 +23,11 @@
       <form id="loginform" action="overview.html" method="post">
         <h2>Anmelden</h2>
         <div class="form_row">
-          <label for="in_username">Benutzername</label>
+          <label for="username">Benutzername</label>
           <input type="text" name="username" required/>
         </div>
         <div class="form_row">
-          <label for="in_pwd">Passwort</label>
+          <label for="password">Passwort</label>
           <input type="password" name="password" pattern="^.*(?=.{8,13})(?=.*[a-zA-Z])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$" required/>
         </div>
         <input id="bt_submit" type="submit" value="Anmelden"/>
