@@ -264,10 +264,14 @@ main.overview-main {
   box-sizing: border-box;
   border-right-width: 2px;
   border-right-style: solid;
-  border-color: #CCCCCC
+  border-color: #CCCCCC;
   flex: 3;
   flex-basis: 70%;
   height: 100%;
+}
+
+h4 {
+  font-weight: normal;
 }
 
 aside {
