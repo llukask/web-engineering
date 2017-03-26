@@ -251,7 +251,7 @@ h4 {
   margin-bottom: 0;
 }
 
-main {
+main.overview-main {
   box-sizing: border-box;
   border-right-width: 2px;
   border-right-style: solid;
