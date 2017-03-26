@@ -200,6 +200,10 @@ ul#overview-grid > li {
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
 }
 
+ul#overview-grid > li:hover {
+  box-shadow: 0 8px 8px rgba(0, 0, 255, 0.3);
+}
+
 ul#overview-grid > li > img {
   flex-basis: 1;
   width: 150px
