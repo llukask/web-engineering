@@ -197,7 +197,7 @@ ul#overview-grid > li {
 
 ul#overview-grid > li > img {
   box-sizing: padding-box;
-  width: 164px;
+  width: 140px;
   /*float: left;*/
   /*margin: 4px*/;
 }
