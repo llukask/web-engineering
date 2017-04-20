@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   moduleId: module.id,
   selector: 'my-app',
-  templateUrl: '../views/login.html'
+  templateUrl: '../views/loginView.html'
 })
 export class LoginComponent {
   static router: Router;

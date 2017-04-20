@@ -6,7 +6,10 @@ import { ChartsModule } from 'ng2-charts';
 import { AppComponent }         from './components/app.component';
 import { OverviewComponent } from './components/overview.component';
 import { LoginComponent } from './components/login.component';
+import { OptionsComponent } from './components/options.component';
+import { ServerStatsComponent } from './components/serverstats.component';
 import { AppRoutesModule } from './app-routes.module';
+import {DetailsComponent} from "./components/details.components";
 
 @NgModule({
   imports: [
@@ -19,6 +22,9 @@ import { AppRoutesModule } from './app-routes.module';
     AppComponent,
     OverviewComponent,
     LoginComponent,
+    OptionsComponent,
+    ServerStatsComponent,
+    DetailsComponent,
   ],
   providers: [
   ],
