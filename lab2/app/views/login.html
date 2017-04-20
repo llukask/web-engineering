@@ -33,7 +33,7 @@
         <label class="form-label" for="username-input">
           Benutzername
         </label>
-        <input type="text" name="username" id="username-input" required class="form-input">
+        <input type="text" name="username" id="username-input" required class="form-input" #userName>
         <span id="username-error" class="error-text"></span>
       </div>
       <div class="form-row">
@@ -41,11 +41,11 @@
           Passwort
         </label>
         <input type="password" name="password" id="password-input" required class="form-input" minlength="4"
-               maxlength="12">
+               maxlength="12" #password>
         <span id="password-error" class="error-text"></span>
       </div>
       <div class="form-row form-row-center">
-        <button class="button button-submit">
+        <button class="button button-submit" (click)="login(userName.value, password.value)">
           Anmelden
         </button>
       </div>
