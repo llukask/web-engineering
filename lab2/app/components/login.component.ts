@@ -18,7 +18,7 @@ export class LoginComponent {
       console.log("No valid login!")
     } else {
       console.log("Redirecting to overview!");
-      this.router.navigateByUrl("overview");
+      this.router.navigate(["overview"]);
     }
   }
 }

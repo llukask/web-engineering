@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Device} from "../model/device";
+import {DeviceService} from "../services/device.service";
 
 @Component({
   moduleId: module.id,
@@ -7,4 +8,6 @@ import { Router } from '@angular/router';
   templateUrl: '../views/detailsView.html'
 })
 export class DetailsComponent {
+  device: Promise<Device>;
+
 }

@@ -8,15 +8,22 @@ import { OverviewComponent } from './components/overview.component';
 import { LoginComponent } from './components/login.component';
 import { OptionsComponent } from './components/options.component';
 import { ServerStatsComponent } from './components/serverstats.component';
-import { AppRoutesModule } from './app-routes.module';
+import {AppRoutes} from './app-routes';
 import {DetailsComponent} from "./components/details.components";
+import {ContinuousControlComponent} from "./components/continous-control.component";
+import {DiscreteControlComponent} from "./components/discrete-control.component";
+import {BooleanControlComponent} from "./components/boolean-control.component";
+import {DeviceService} from "./services/device.service";
+import {DeviceCardComponent} from "./components/device-card.component";
+import {DeviceResolver} from "./services/device-resolver.service";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     ChartsModule,
-    AppRoutesModule,
+    RouterModule.forRoot(AppRoutes),
   ],
   declarations: [
     AppComponent,
@@ -25,8 +32,14 @@ import {DetailsComponent} from "./components/details.components";
     OptionsComponent,
     ServerStatsComponent,
     DetailsComponent,
+    ContinuousControlComponent,
+    DiscreteControlComponent,
+    BooleanControlComponent,
+    DeviceCardComponent,
   ],
   providers: [
+    DeviceService,
+    DeviceResolver
   ],
   bootstrap: [ AppComponent ]
 })
