@@ -6,20 +6,20 @@
         <label class="accessibility" for="details-log">Letzte Werteänderungen</label>
         <textarea id="details-log" class="detail-logs" placeholder="Gerätelog" readonly rows="6">6.3.2017 10:02:32: Ein -> Standby</textarea>
         <div class="details-settings">
-            <h3 class="details-headline">Gerätezustand einstellen</h3>
+            <h3 class="details-headline">{{control.name}}</h3>
 
             <form class="update-form" method="post">
                 <label class="update-form-field" id="current-value">
-                    <span class="current-value">derzeit: Standby</span>
+                    <span class="current-value">derzeit: {{control.values[control.current]}}</span>
                 </label>
                 <label class="accessibility" for="new-value">Bitte gewünschten Wert aus Menü auswählen.</label>
-                <select id="new-value" class="update-form-field form-input" name="new-value" required>
-                    <option>Aus</option>
-                    <option>Ein</option>
-                    <option selected>Standby</option>
+                <select id="new-value" class="update-form-field form-input" name="new-value" required [(ngModel)]="val">
+                    <option *ngFor="let value of control.values"
+                            [selected]="control.values.indexOf(value) === control.current"
+                            [value]="control.values.indexOf(value)">{{value}}</option>
                 </select>
                 <input type="submit" id="submit-value" class="update-form-field button" name="submit-value"
-                       value="Wert setzen">
+                       value="Wert setzen" (click)="submit()">
             </form>
         </div>
     </div>

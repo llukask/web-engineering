@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ControlUnit} from "../model/controlUnit";
 
 @Component({
     moduleId: module.id,
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
     templateUrl: '../views/discreteControl.html'
 })
 export class DiscreteControlComponent {
-    
+    @Input() control: ControlUnit;
+    val: number;
+    msgs: string[];
+
+    submit() {
+        console.log(this.val);
+    }
 }

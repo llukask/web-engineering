@@ -15,7 +15,7 @@ export const AppRoutes: Routes = [
   { path: 'overview/:id',
     component: DetailsComponent,
     resolve: {
-      id: DeviceResolver
+      device: DeviceResolver
     }
   },
 ];

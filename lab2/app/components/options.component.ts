@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     moduleId: module.id,
-    selector: 'my-app',
+    selector: 'options',
     templateUrl: '../views/optionsView.html'
 })
 export class OptionsComponent {

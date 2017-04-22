@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
-  selector: 'my-app',
+  selector: 'login',
   templateUrl: '../views/loginView.html'
 })
 export class LoginComponent {

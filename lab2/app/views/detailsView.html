@@ -2,16 +2,18 @@
     <server-stats></server-stats>
 </aside>
 <main aria-labelledby="deviceheadline" class="details-container">
-    <div attr.data-device-id="19ff7d47-bd80-4a5d-adfb-bc77558facad" class="details-headline">
-        <h2 class="main-headline" id="deviceheadline">Heizkörper Badezimmer</h2>
+    <div attr.data-device-id="{{device.id}}" class="details-headline">
+        <h2 class="main-headline" id="deviceheadline">{{device.display_name}}</h2>
     </div>
     <div class="details-holder">
-
-        {{device | async}}
-
-        <continuous-control></continuous-control>
-        <discrete-control></discrete-control>
-        <boolean-control></boolean-control>
+        <ng-container *ngFor="let control of device.control_units">
+            {{control.name}}
+            <ng-container [ngSwitch]="control.type">
+                <continuous-control *ngSwitchCase="controlType.continuous" [control]="control"></continuous-control>
+                <discrete-control *ngSwitchCase="controlType.enum" [control]="control"></discrete-control>
+                <boolean-control *ngSwitchCase="controlType.boolean" [control]="control"></boolean-control>
+            </ng-container>
+        </ng-container>
     </div>
 
 </main>

@@ -13,8 +13,10 @@ export class DeviceResolver implements Resolve<Device> {
 
     return this.ds.getDevice(id).then(device => {
       if(device) {
+        console.log(device.display_name);
         return device
       } else {
+        console.error("Could not find device with id " + id);
         this.router.navigate(['/overview']);
         return null;
       }
