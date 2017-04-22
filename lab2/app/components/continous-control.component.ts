@@ -10,11 +10,12 @@ export class ContinuousControlComponent {
     @Input() control: ControlUnit;
 	// lineChart
 	  public lineChartData:Array<any> = [
-		{data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-		{data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-		{data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
+		{data: [15, 12, 14, 16, 11, 20, 15, 12, 12.5, 12, 12.3, 12.4, 12, 15], label: 'Verlauf'}
 	  ];
-	  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+	  public lineChartLabels:Array<any> = ['6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', 
+	  '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', 
+	  '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30',
+	  '6.3.2017 10:01:30',  ];
 	  public lineChartOptions:any = {
 		responsive: true
 	  };
