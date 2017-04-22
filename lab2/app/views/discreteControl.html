@@ -1,6 +1,15 @@
 <div class="details-outer">
     <div class="details-image-container">
-        <img class="details-image" src="../../images/placeholder_enum.PNG">
+        <!--<img class="details-image" src="../../images/placeholder_enum.PNG">-->
+		<div style="display: block">
+		  <canvas baseChart
+				  [data]="polarAreaChartData"
+				  [labels]="polarAreaChartLabels"
+				  [legend]="polarAreaLegend"
+				  [chartType]="polarAreaChartType"
+				  (chartHover)="chartHovered($event)"
+				  (chartClick)="chartClicked($event)"></canvas>
+		</div>
     </div>
     <div class="details-data">
         <label class="accessibility" for="details-log">Letzte Werteänderungen</label>

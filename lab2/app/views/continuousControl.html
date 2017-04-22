@@ -1,6 +1,22 @@
 <div class="details-outer">
     <div class="details-image-container">
-        <img class="details-image" src="../../images/placeholder_continuous.PNG">
+        <!--<img class="details-image" src="../../images/placeholder_continuous.PNG">-->
+		<div class="row">
+		  <div class="col-md-6">
+			<div style="display: block;">
+			<canvas baseChart width="400" height="400"
+						[datasets]="lineChartData"
+						[labels]="lineChartLabels"
+						[options]="lineChartOptions"
+						[colors]="lineChartColors"
+						[legend]="lineChartLegend"
+						[chartType]="lineChartType"
+						(chartHover)="chartHovered($event)"
+						(chartClick)="chartClicked($event)"></canvas>
+			</div>
+		  </div>
+
+		</div>
     </div>
     <div class="details-data">
         <label class="accessibility" for="details-log">Letzte Werteänderungen</label>
