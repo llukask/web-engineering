@@ -22,6 +22,7 @@ function drawThermometer(id, src, min, max, current, values) {
                onLoad: function(svg) {
                    var txt = $("svg").find("#tspan3817-6").text(max);
                    var txt = $("svg").find("#tspan3817").text(min);
+                   var rect = svg.rect(254, 324-(current*3.1415), 70, (current*3.1415),{fill: 'black'}); 
                },
                changeSize: false});
 }
