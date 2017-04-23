@@ -56,5 +56,15 @@ function drawCam(id, src, min, max, current, values) {
 }
 
 function drawShutter(id, src, min, max, current, values) {
-  // TODO
+    // TODO
+    //$svg = $("#"+id);
+    //$("#ath4559-2-5", $svg).attr('d', "");
+    //document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
+    var _id = "#"+id;
+    $(_id).empty();
+    $(_id).svg({loadURL: src,
+        onLoad: function(svg) {
+           // var rol =$(_id).find("path").attr("d","");
+        },
+        changeSize: false});
 }
