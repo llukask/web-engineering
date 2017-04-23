@@ -56,5 +56,20 @@ function drawCam(id, src, min, max, current, values) {
 }
 
 function drawShutter(id, src, min, max, current, values) {
-  // TODO
+  var _id = "#"+id;
+  $(_id).empty();
+  $(_id).svg({loadURL: src,
+              onLoad: function(svg) {
+                svg.configure({viewBox: '0 0 60 60'}, false);
+                var ps =$(_id).find("path");
+                switch(current) {
+                  case 0:
+                    svg.remove(ps[1]);
+                    svg.remove(ps[2]);
+                  case 1:
+                    svg.remove(ps[3]);
+                    svg.remove(ps[4]);
+                }
+              },
+              changeSize: false});
 }
