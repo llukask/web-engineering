@@ -19,9 +19,9 @@ function drawThermometer(id, src, min, max, current, values) {
    var _id = "#"+id;
    $(_id).empty();
    $(_id).svg({loadURL: src,
-               onLoad: function() {
-                   var txt = $("#tspan3817-6");
-                   txt.text(max);
+               onLoad: function(svg) {
+                   var txt = $("svg").find("#tspan3817-6").text(max);
+                   var txt = $("svg").find("#tspan3817").text(min);
                },
                changeSize: false});
 }
