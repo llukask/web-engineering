@@ -5,7 +5,10 @@ import {DeviceService} from "../services/device.service";
 @Component({
     moduleId: module.id,
     selector: 'overview',
-    templateUrl: '../views/overviewView.html'
+    templateUrl: '../views/overviewView.html',
+    host: {
+        class: 'main-container'
+    },
 })
 export class OverviewComponent {
     devices: Promise<Device[]>;

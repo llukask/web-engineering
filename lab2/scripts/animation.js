@@ -17,9 +17,10 @@ function drawThermometer(id, src, min, max, current, values) {
    Passen Sie die Höhe des Temperaturstandes entsprechend dem aktuellen Wert an.
    Beachten Sie weiters, dass auch die Beschriftung des Thermometers (max, min Temperatur) angepasst werden soll.
    */
-   $("#"+id).load(function(){
-     $("#"+id).empty();
-   }).change();
+   $(function() {
+     console.log(id);
+     $("#"+id).html("Blaknksljnfkasdnfgisejdngikjnsdfjknfgi<sdngid<fngijkdnfglkjdfnglkjydnf");
+   });
 }
 
 

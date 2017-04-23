@@ -5,7 +5,10 @@ import { Router } from '@angular/router';
 @Component({
   moduleId: module.id,
   selector: 'login',
-  templateUrl: '../views/loginView.html'
+  templateUrl: '../views/loginView.html',
+  host: {
+    class: 'main-container'
+  },
 })
 export class LoginComponent {
   static router: Router;
