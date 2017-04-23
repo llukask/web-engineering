@@ -13,7 +13,7 @@ export class DiscreteControlComponent implements OnInit {
 
 	  // PolarArea
 	  public polarAreaChartLabels:string[] = ['Aus', 'Ein', 'Standby'];
-	  public polarAreaChartData:number[] = [3, 2, 3];
+	  public polarAreaChartData:number[] = [0,0,0];
 	  public polarAreaLegend:boolean = true;
 	 
 	  public polarAreaChartType:string = 'polarArea';

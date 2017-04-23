@@ -12,12 +12,9 @@ export class ContinuousControlComponent {
     msgs: string = "";
 	// lineChart
 	  public lineChartData:Array<any> = [
-		{data: [15, 12, 14, 16, 11, 20, 15, 12, 12.5, 12, 12.3, 12.4, 12, 15], label: 'Verlauf'}
+		{data: [], label: 'Verlauf'}
 	  ];
-	  public lineChartLabels:Array<any> = ['6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', 
-	  '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', 
-	  '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30', '6.3.2017 10:01:30',
-	  '6.3.2017 10:01:30',  ];
+	  public lineChartLabels:Array<any> = [];
 	  public lineChartOptions:any = {
 		responsive: true
 	  };

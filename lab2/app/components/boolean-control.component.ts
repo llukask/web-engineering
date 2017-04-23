@@ -13,7 +13,7 @@ export class BooleanControlComponent {
     msgs: string;
     // Doughnut
   public doughnutChartLabels:string[] = ['Aus', 'Ein'];
-  public doughnutChartData:number[] = [2, 3];
+  public doughnutChartData:number[] = [0, 0];
   public doughnutChartType:string = 'doughnut';
  
   // events
