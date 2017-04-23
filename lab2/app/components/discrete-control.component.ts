@@ -13,7 +13,7 @@ export class DiscreteControlComponent implements OnInit {
 
 	  // PolarArea
 	  public polarAreaChartLabels:string[] = ['Aus', 'Ein', 'Standby'];
-	  public polarAreaChartData:number[] = [3, 2, 3];
+	  public polarAreaChartData:number[] = [0,0,0];
 	  public polarAreaLegend:boolean = true;
 	 
 	  public polarAreaChartType:string = 'polarArea';
@@ -31,6 +31,12 @@ export class DiscreteControlComponent implements OnInit {
 	  	this.polarAreaChartLabels = this.control.values;
 		}
 
+	// 6.3.2017 10:03:30: Aus -> An
+	formatDate(d: Date): string {
+		return d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear() + " " + (d.getHours() + 1) + ":"
+			+ d.getMinutes() + d.getSeconds();
+	}
+
     submit() {
 	  	console.log(this.control.current + " -> " + this.val);
         if(this.val === null || this.val === undefined || this.control.current == this.val) {
@@ -38,8 +44,9 @@ export class DiscreteControlComponent implements OnInit {
 				}
 				console.log("Submitted form with value " + this.control.values[this.val] + " (" + this.val + ")");
         this.polarAreaChartData[this.val] += 1;
-        this.msgs += ((new Date()).toISOString() + ": " + this.control.values[this.control.current] + " -> "
-					+ this.control.values[this.val]) + "\n";
+        this.polarAreaChartData = this.polarAreaChartData.slice();
+        this.msgs += this.formatDate(new Date()) + ": " + this.control.values[this.control.current] + " -> "
+					+ this.control.values[this.val] + "\n";
 				this.control.current = this.val;
 				console.log(JSON.stringify(this.polarAreaChartData))
     }

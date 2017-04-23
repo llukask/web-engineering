@@ -19,7 +19,7 @@
 				<form class="update-form" method="post">
 
 					<label class="update-form-field" id="current-value">
-						<span class="current-value">derzeit: {{this.fomatBool(val)}}</span>
+						<span class="current-value">derzeit: {{control.current | num2bool | formatBool}}</span>
 					</label>
 
 					<label class="accessibility" for="new-value">Bitte gewünschten Wert auswählen.</label>

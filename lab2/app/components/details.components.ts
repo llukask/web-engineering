@@ -8,7 +8,9 @@ import {ControlType} from "../model/controlType";
   moduleId: module.id,
   selector: 'device-details',
   templateUrl: '../views/detailsView.html',
-
+  host: {
+    class: 'main-container'
+  },
 })
 export class DetailsComponent implements OnInit {
   device: Promise<Device>;

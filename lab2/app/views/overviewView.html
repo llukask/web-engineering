@@ -1,9 +1,11 @@
-<server-stats></server-stats>
+<aside class="sidebar" aria-labelledby="serverinfoheadline">
+    <server-stats class="server-info-container"></server-stats>
+</aside>
 <main aria-labelledby="devicesheadline">
     <h2 class="main-headline" id="devicesheadline">Geräte</h2>
 
     <div class="devices">
-        <device-card *ngFor="let device of devices | async" [device]="device"></device-card>
+        <device-card class="device-outer" *ngFor="let device of devices | async" [device]="device"></device-card>
         <!--
         <div class="device-outer" data-device-id="a79acab4-e88b-11e6-bf01-fe55135034f3">
             <a routerLink="details" class="device"

@@ -24,6 +24,10 @@ function drawThermometer(id, src, min, max, current, values) {
 }
 
 function dThermometer(svg) {
+   $(function() {
+     console.log(id);
+     $("#"+id).html("Blaknksljnfkasdnfgisejdngikjnsdfjknfgi<sdngid<fngijkdnfglkjdfnglkjydnf");
+   });
 }
 
 

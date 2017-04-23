@@ -17,6 +17,8 @@ import {DeviceService} from "./services/device.service";
 import {DeviceCardComponent} from "./components/device-card.component";
 import {DeviceResolver} from "./services/device-resolver.service";
 import {RouterModule} from "@angular/router";
+import {FormatBoolPipe} from "./format-bool.pipe";
+import {Num2BoolPipe} from "./num2bool.pipe";
 
 @NgModule({
   imports: [
@@ -36,6 +38,8 @@ import {RouterModule} from "@angular/router";
     DiscreteControlComponent,
     BooleanControlComponent,
     DeviceCardComponent,
+    FormatBoolPipe,
+    Num2BoolPipe,
   ],
   providers: [
     DeviceService,
