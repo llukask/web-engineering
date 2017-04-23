@@ -58,8 +58,8 @@ function drawCam(id, src, min, max, current, values) {
    $(_id).svg({loadURL: src,
                onLoad: function(svg) {
                  svg.configure({viewBox: '-8 0 60 60'}, false);
-                 var ps = $(_id).find("path");
-                 var cs = $(_id).find("circle");
+                 var ps = $(_id).find("path").attr("style","fill:#fff;");
+                 var cs = $(_id).find("circle").attr("style","fill:#000;");
                  var p = ps[ps.length-1];
                  var c = cs[cs.length-1];
                  var nc = jQuery.extend({}, c)
