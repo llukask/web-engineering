@@ -11,6 +11,7 @@
  Rufen Sie dazu mit draw_image(id, src, min, max, current, values) die zugrunde liegende und hier definierte Funktione auf.
  */
 
+
 function drawThermometer(id, src, min, max, current, values) {
   /* TODO
    Passen Sie die Höhe des Temperaturstandes entsprechend dem aktuellen Wert an.
@@ -20,9 +21,10 @@ function drawThermometer(id, src, min, max, current, values) {
    $(_id).empty();
    $(_id).svg({loadURL: src,
                onLoad: function(svg) {
-                   var txt = $("svg").find("#tspan3817-6").text(max);
-                   var txt = $("svg").find("#tspan3817").text(min);
-                   var rect = svg.rect(254, 324-(current*3.1415), 70, (current*3.1415),{fill: 'black'}); 
+                   var txts = $(_id).find("tspan");
+                   txts[0].innerHTML = min;
+                   txts[1].innerHTML = max;
+                   var rect = svg.rect(254, 324-(current*3.1415), 70, (current*3.1415),{fill: 'black'});
                },
                changeSize: false});
 }
