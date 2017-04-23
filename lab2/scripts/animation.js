@@ -11,15 +11,19 @@
  Rufen Sie dazu mit draw_image(id, src, min, max, current, values) die zugrunde liegende und hier definierte Funktione auf.
  */
 
-
 function drawThermometer(id, src, min, max, current, values) {
   /* TODO
    Passen Sie die Höhe des Temperaturstandes entsprechend dem aktuellen Wert an.
    Beachten Sie weiters, dass auch die Beschriftung des Thermometers (max, min Temperatur) angepasst werden soll.
    */
-   $("#"+id).load(function(){
-     $("#"+id).empty();
-   }).change();
+   var _id = "#"+id;
+   $(_id).empty();
+   $(_id).svg({loadURL: src,
+               onLoad: dThermometer,
+               changeSize: false});
+}
+
+function dThermometer(svg) {
 }
 
 
