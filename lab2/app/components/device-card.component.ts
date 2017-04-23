@@ -9,7 +9,8 @@ import {ControlUnit} from "../model/controlUnit";
 })
 export class DeviceCardComponent implements AfterViewInit {
     @Input() device : Device;
-    isEdit: boolean;
+    edit: boolean = false;
+    val: string;
 
     ngAfterViewInit() {
         let primaryControl: ControlUnit = this.device.control_units.find((cu) => cu.primary);
@@ -22,5 +23,21 @@ export class DeviceCardComponent implements AfterViewInit {
         console.log("Calling draw_image with id=" + id + ", image=" + image + ", min=" + min + ", max=" + max +
             ", current=" + current + ", values=" + JSON.stringify(values));
         this.device.draw_image(id, image, min, max, current, values);
+    }
+
+    toggleEdit(event: Event) {
+        console.log("Clicked toggle edit of device " + this.device.id + "(" + this.edit + ", " + this.val + ", " + JSON.stringify(this.device));
+        event.stopPropagation();
+        if(this.edit) {
+            if(this.val === undefined || this.val === null || this.val === '') {
+                return;
+            } else {
+                this.device.display_name = this.val;
+                this.edit = false;
+            }
+        } else {
+            this.val = this.device.display_name;
+            this.edit = true;
+        }
     }
 }
