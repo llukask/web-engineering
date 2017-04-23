@@ -21,16 +21,30 @@ function drawThermometer(id, src, min, max, current, values) {
    $(_id).empty();
    $(_id).svg({loadURL: src,
                onLoad: function(svg) {
+                   svg.configure({viewBox: '250 0 100 750'}, false);
                    var txts = $(_id).find("tspan");
                    txts[0].innerHTML = min;
                    txts[1].innerHTML = max;
-                   var rect = svg.rect(254, 324-(current*3.1415), 70, (current*3.1415),{fill: 'black'});
+                   var rect = svg.rect(254, 324-((current+(min*(-1))*3.1415)), 70, ((current+(min*(-1)))*3.1415),{fill: 'black'});
                },
                changeSize: false});
 }
 
 function drawBulb(id, src, min, max, current, values) {
-  // TODO
+  var _id = "#"+id;
+  if(current == 1) {
+    var col = "#fc0"
+  }
+  else {
+    var col = "#000"
+  }
+  $(_id).empty();
+  $(_id).svg({loadURL: src,
+              onLoad: function(svg) {
+                svg.configure({viewBox: '200 -50 100 750'}, false);
+                var ps =$(_id).find("path").attr("fill",col);
+              },
+              changeSize: false});
 }
 
 function drawCam(id, src, min, max, current, values) {
