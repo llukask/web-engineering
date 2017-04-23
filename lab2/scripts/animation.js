@@ -58,17 +58,19 @@ function drawCam(id, src, min, max, current, values) {
    $(_id).svg({loadURL: src,
                onLoad: function(svg) {
                  svg.configure({viewBox: '-8 0 60 60'}, false);
-                 var ps = $(_id).find("path").attr("style","fill:#fff;");
-                 var cs = $(_id).find("circle").attr("style","fill:#000;");
-                 var p = ps[ps.length-1];
-                 var c = cs[cs.length-1];
-                 var nc = jQuery.extend({}, c)
-                 var np = jQuery.extend({}, p)
-                 //Farbe ändern
-                 svg.add(nc);
-                 svg.add(np);
-                 svg.remove(c);
-                 svg.remove(p);
+                 if(current == 0){
+                   var ps = $(_id).find("path");
+                   var cs = $(_id).find("circle");
+                   var p = ps[ps.length-1];
+                   var c = cs[cs.length-1];
+                   var nc = jQuery.extend({}, c)
+                   var np = jQuery.extend({}, p)
+                   nc.style.fill = "#000";
+                   svg.add(nc);
+                   svg.add(np);
+                   svg.remove(c);
+                   svg.remove(p);
+                 }
                },
                changeSize: false});
 }
