@@ -41,6 +41,12 @@ export class BooleanControlComponent {
     return b ? 1 : 0;
   }
 
+  // 6.3.2017 10:03:30: Aus -> An
+  formatDate(d: Date): string {
+    return d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear() + " " + (d.getHours() + 1) + ":"
+      + d.getMinutes() + d.getSeconds();
+  }
+
   submit() {
     console.log(this.val);
     console.log(this.formatBool(this.makeBool(this.control.current)) + " -> " + this.formatBool(this.val));
@@ -49,7 +55,8 @@ export class BooleanControlComponent {
     }
     console.log("Submitted form with value " + this.formatBool(this.val) + " (" + this.val + ")");
     this.doughnutChartData[this.makeNum(this.val)] += 1;
-    this.msgs += ((new Date()).toISOString()) + ": " +
+    this.doughnutChartData = this.doughnutChartData.slice();
+    this.msgs += this.formatDate(new Date()) + ": " +
       this.formatBool(this.makeBool(this.control.current)) + " -> "
     + this.formatBool(this.val) + "\n";
     this.control.current = this.makeNum(this.val);

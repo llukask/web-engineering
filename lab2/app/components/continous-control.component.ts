@@ -59,14 +59,27 @@ export class ContinuousControlComponent {
 		console.log(e);
 	  }
 
+	// 6.3.2017 10:03:30: Aus -> An
+	formatDate(d: Date): string {
+		return d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear() + " " + (d.getHours() + 1) + ":"
+			+ d.getMinutes() + d.getSeconds();
+	}
+
 	submit() {
 		console.log(this.control.current + " -> " + this.val);
-		if(this.val === null || this.val === undefined || this.control.current == this.val) {
+		if(this.val === null || this.val === undefined || this.control.current == this.val || this.val < this.control.min
+			|| this.val > this.control.max) {
 			return;
 		}
 		console.log("Submitted form with value " + this.val);
-		this.lineChartData.push(this.val);
-		this.msgs += (new Date()).toISOString() + ": " + this.control.current + " -> " + this.val + "\n";
+		let d: Date = new Date(Date.now());
+		this.lineChartData[0].data.push(this.val);
+		this.lineChartLabels.push(this.formatDate(d));
+		this.lineChartData[0].data = this.lineChartData[0].data.slice(Math.max(0, this.lineChartData[0].length - 14), this.lineChartData[0].length);
+		this.lineChartData = this.lineChartData.slice();
+		this.lineChartLabels = this.lineChartLabels.slice(Math.max(0, this.lineChartLabels.length - 14), this.lineChartLabels.length);
+		//console.log(JSON.stringify(this.lineChartData));
+		this.msgs += this.formatDate(d) + ": " + this.control.current + " -> " + this.val + "\n";
 		this.control.current = this.val;
 	}
 }

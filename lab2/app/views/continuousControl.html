@@ -29,7 +29,7 @@
                     <span class="current-value">derzeit: {{control.current}}</span>
                 </label>
                 <label class="accessibility" for="new-value">Bitte gewünschten Wert eingeben.</label>
-                <input type="number" step="0.01" min="0" max="50" id="new-value" value="1"
+                <input type="number" step="0.01" min="{{control.min}}" max="{{control.max}}" id="new-value" value="1"
                        class="update-form-field form-input" name="new-value" required [(ngModel)]="val">
                 <input type="submit" id="submit-value" class="update-form-field button" name="submit-value"
                        value="Wert setzen" (click)="submit()">
