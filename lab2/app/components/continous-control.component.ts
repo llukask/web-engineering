@@ -75,9 +75,9 @@ export class ContinuousControlComponent {
 		let d: Date = new Date(Date.now());
 		this.lineChartData[0].data.push(this.val);
 		this.lineChartLabels.push(this.formatDate(d));
-		this.lineChartData[0].data = this.lineChartData[0].data.slice(Math.max(0, this.lineChartData[0].length - 14), this.lineChartData[0].length);
+		//this.lineChartData[0].data = this.lineChartData[0].data.slice(Math.max(0, this.lineChartData[0].length - 14), this.lineChartData[0].length);
 		this.lineChartData = this.lineChartData.slice();
-		this.lineChartLabels = this.lineChartLabels.slice(Math.max(0, this.lineChartLabels.length - 14), this.lineChartLabels.length);
+		//this.lineChartLabels = this.lineChartLabels.slice(Math.max(0, this.lineChartLabels.length - 14), this.lineChartLabels.length);
 		//console.log(JSON.stringify(this.lineChartData));
 		this.msgs += this.formatDate(d) + ": " + this.control.current + " -> " + this.val + "\n";
 		this.control.current = this.val;
