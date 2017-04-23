@@ -19,17 +19,12 @@ function drawThermometer(id, src, min, max, current, values) {
    var _id = "#"+id;
    $(_id).empty();
    $(_id).svg({loadURL: src,
-               onLoad: dThermometer,
+               onLoad: function() {
+                   var txt = $("#tspan3817-6");
+                   txt.text(max);
+               },
                changeSize: false});
 }
-
-function dThermometer(svg) {
-   $(function() {
-     console.log(id);
-     $("#"+id).html("Blaknksljnfkasdnfgisejdngikjnsdfjknfgi<sdngid<fngijkdnfglkjdfnglkjydnf");
-   });
-}
-
 
 function drawBulb(id, src, min, max, current, values) {
   // TODO
