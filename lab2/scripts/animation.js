@@ -53,6 +53,24 @@ function drawCam(id, src, min, max, current, values) {
     Dabei soll jedoch nicht nur einfach die Farbe der Elemente verändert werden, sondern es soll eine Kopie der zu verändernden Elemente erstellt
      und anschließend die aktuellen durch die angepassten Kopien ersetzt werden.
    */
+   var _id = "#"+id;
+   $(_id).empty();
+   $(_id).svg({loadURL: src,
+               onLoad: function(svg) {
+                 svg.configure({viewBox: '-8 0 60 60'}, false);
+                 var ps = $(_id).find("path");
+                 var cs = $(_id).find("circle");
+                 var p = ps[ps.length-1];
+                 var c = cs[cs.length-1];
+                 var nc = jQuery.extend({}, c)
+                 var np = jQuery.extend({}, p)
+                 //Farbe ändern
+                 svg.add(nc);
+                 svg.add(np);
+                 svg.remove(c);
+                 svg.remove(p);
+               },
+               changeSize: false});
 }
 
 function drawShutter(id, src, min, max, current, values) {
@@ -60,7 +78,7 @@ function drawShutter(id, src, min, max, current, values) {
   $(_id).empty();
   $(_id).svg({loadURL: src,
               onLoad: function(svg) {
-                svg.configure({viewBox: '0 0 60 60'}, false);
+                svg.configure({viewBox: '-8 0 60 60'}, false);
                 var ps =$(_id).find("path");
                 switch(current) {
                   case 0:
