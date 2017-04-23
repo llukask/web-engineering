@@ -66,6 +66,7 @@ function drawCam(id, src, min, max, current, values) {
                    var nc = jQuery.extend({}, c)
                    var np = jQuery.extend({}, p)
                    nc.style.fill = "#000";
+                   np.style.fill = "#fff";
                    svg.add(nc);
                    svg.add(np);
                    svg.remove(c);
