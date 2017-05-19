@@ -35,6 +35,7 @@ app.use(cors());
  *      Bei der Anlage neuer Geräte wird eine neue ID benötigt. Verwenden Sie dafür eine uuid (https://www.npmjs.com/package/uuid, Bibliothek ist bereits eingebunden).
  */
 var devices = [];
+var credentials = {};
 
 app.get("/devices", function(req, res) {
     "use strict"
@@ -55,21 +56,75 @@ var images = {
               "image_alt": "Webcam als Indikator für Aktivierung"  }
 };
 
-function makeDevice(description, displayName, type, typeName) {
-  var dev = {
-    "id": uuid.v1(),
-    "description": description,
-    "display_name": displayName,
-    "type_name": typeName,
-    "type": type
-  };
-  return Object.assign(dev, images[type])
+let cuTypes = ["boolean", "continous", "enum"];
+
+function validateControlUnit(cu) {
+  let cuPropsExist = cu.hasOwnProperty("name")
+      && cu.hasOwnProperty("type")
+      && cu.hasOwnProperty("current")
+      && cu.hasOwnProperty("primary")
+      && typeof cu["primary"] === 'boolean';
+
+  if(cuPropsExist !== true) {
+    return false;
+  }
+
+  if(cu["type"] === "boolean") {
+    return cu.hasOwnProperty("values")
+        && cu["values"] === [""]
+        && (cu["current"] === 1 || cu["current"] === 0);
+  } else if(cu["type"] === "enum") {
+    return cu.hasOwnProperty("values")
+        && Arrays.isArray(cu["values"])
+        && (cu["current"] < cu["values"].length)
+  } else if(cu["type"] == "continous") {
+    return cu.hasOwnProperty("min") && cu.hasOwnProperty("max");
+  }
+}
+
+function validateDeviceReq(deviceReq) {
+  let deviceValid = deviceReq.hasOwnProperty("description")
+                 && deviceReq.hasOwnProperty("display_name")
+                 && deviceReq.hasOwnProperty("type_name")
+                 && deviceReq.hasOwnProperty("type")
+                 && deviceReq.hasOwnProperty("control_units")
+                 && images.hasOwnProperty(deviceReq["type"]);
+
+  if(deviceValid !== true) {
+    return false;
+  }
+
+  let controlUnitsIsArray = Array.isArray(deviceReq["control_units"]);
+
+  if(controlUnitsIsArray !== true) {
+    return false;
+  }
+
+  let controlUnitsValid = deviceReq["control_units"].length > 0
+                       && deviceReq["control_units"].every(validateControlUnit);
+
+  if(controlUnitsValid !== true) {
+    return false;
+  }
+  return true;
+}
+
+function makeDevice(dev) {
+  dev["id"] = uuid.v4();
+  return Object.assign(dev, images[dev["type"]]);
 }
 
 app.post("/devices", function(req, res) {
   "use strict"
-  var device = makeDevice("Desc", "dn", "Überwachungskamera", "Type");
-  console.log(device);
+  console.log(req.body);
+  let deviceReq = req.body;
+  if(validateDeviceReq(req.body)) {
+    let device = makeDevice(deviceReq);
+    console.log("Adding device: " + device);
+    devices.push(device);
+  } else {
+    res.send("validation error!");
+  }
   res.send("ok");
 })
 
@@ -82,23 +137,30 @@ app.post("/updateCurrent", function (req, res) {
      *      simulation.updatedDeviceValue(device, control_unit, Number(new_value));
      * Diese Funktion verändert gleichzeitig auch den aktuellen Wert des Gerätes, Sie müssen diese daher nur mit den korrekten Werten aufrufen.
      */
+
 });
 
 
 function readUser() {
     "use strict";
     //TODO Lesen Sie die Benutzerdaten aus dem login.config File ein.
+    let userContents = fs.readFileSync("resources/login.config", "utf-8");
+    let lines = userContents.split('\r\n');
+    let pairs = lines.map(l => l.split(': '));
+    pairs.forEach(p => credentials[p[0]] = p[1]);
+    console.log(credentials);
 }
 
 function readDevices() {
     "use strict";
-    //TODO Lesen Sie die Gerätedaten aus der devices.json Datei ein.
+    //Lesen Sie die Gerätedaten aus der devices.json Datei ein.
     /*
      * Damit die Simulation korrekt funktioniert, müssen Sie diese mit nachfolgender Funktion starten
      *      simulation.simulateSmartHome(devices.devices, refreshConnected);
      * Der zweite Parameter ist dabei eine callback-Funktion, welche zum Updaten aller verbundenen Clients dienen soll.
      */
      devices = JSON.parse(fs.readFileSync("resources/devices.json", "utf-8")).devices;
+     simulation.simulateSmartHome(devices, refreshConnected);
 }
 
 
