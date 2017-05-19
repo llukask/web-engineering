@@ -2,17 +2,17 @@
 /*jslint esversion: 6*/
 /*jslint eqeqeq: true */
 
-var express = require('express');
+var express = require("express");
 var app = express();
 var fs = require("fs");
-var expressWs = require('express-ws')(app);
-var http = require('http');
+var expressWs = require("express-ws")(app);
+var http = require("http");
 
-var simulation = require('./simulation.js');
-var bodyParser = require('body-parser');
-var jwt = require('jsonwebtoken');
-var cors = require('cors');
-var uuid = require('uuid');
+var simulation = require("./simulation.js");
+var bodyParser = require("body-parser");
+var jwt = require("jsonwebtoken");
+var cors = require("cors");
+var uuid = require("uuid");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -34,7 +34,44 @@ app.use(cors());
  *      Vergessen Sie auch nicht, dass jeder Client mit aktiver Verbindung über alle Aktionen via Websocket zu informieren ist.
  *      Bei der Anlage neuer Geräte wird eine neue ID benötigt. Verwenden Sie dafür eine uuid (https://www.npmjs.com/package/uuid, Bibliothek ist bereits eingebunden).
  */
+var devices = [];
 
+app.get("/devices", function(req, res) {
+    "use strict"
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify(devices));
+});
+
+var images = {
+  "Beleuchtung": { "image": "images/bulb.svg",
+                   "image_alt": "Glühbirne als Indikator für Aktivierung"  },
+  "Heizkörperthermostat": { "image": "images/thermometer.svg",
+                            "image_alt": "Thermometer zur Temperaturanzeige"  },
+  "Rollladen": { "image": "images/roller_shutter.svg",
+                 "image_alt": "Rollladenbild als Indikator für Öffnungszustand"  },
+  "Überwachungskamera": { "image": "images/webcam.svg",
+                          "image_alt": "Webcam als Indikator für Aktivierung"  },
+  "Webcam": { "image": "images/webcam.svg",
+              "image_alt": "Webcam als Indikator für Aktivierung"  }
+};
+
+function makeDevice(description, displayName, type, typeName) {
+  var dev = {
+    "id": uuid.v1(),
+    "description": description,
+    "display_name": displayName,
+    "type_name": typeName,
+    "type": type
+  };
+  return Object.assign(dev, images[type])
+}
+
+app.post("/devices", function(req, res) {
+  "use strict"
+  var device = makeDevice("Desc", "dn", "Überwachungskamera", "Type");
+  console.log(device);
+  res.send("ok");
+})
 
 
 app.post("/updateCurrent", function (req, res) {
@@ -61,6 +98,7 @@ function readDevices() {
      *      simulation.simulateSmartHome(devices.devices, refreshConnected);
      * Der zweite Parameter ist dabei eine callback-Funktion, welche zum Updaten aller verbundenen Clients dienen soll.
      */
+     devices = JSON.parse(fs.readFileSync("resources/devices.json", "utf-8")).devices;
 }
 
 
@@ -81,6 +119,8 @@ var server = app.listen(8081, function () {
     "use strict";
     readUser();
     readDevices();
+
+    // console.log(devices)
 
     var host = server.address().address;
     var port = server.address().port;
