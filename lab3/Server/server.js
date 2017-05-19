@@ -122,6 +122,7 @@ app.post("/devices", function(req, res) {
     let device = makeDevice(deviceReq);
     console.log("Adding device: " + JSON.stringify(device));
     devices.push(device);
+    res.status(200).send(JSON.stringify(device));
   } else {
     res.status(400).send("validation error!");
   }
