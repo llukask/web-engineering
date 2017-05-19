@@ -120,13 +120,27 @@ app.post("/devices", function(req, res) {
   let deviceReq = req.body;
   if(validateDeviceReq(req.body)) {
     let device = makeDevice(deviceReq);
-    console.log("Adding device: " + device);
+    console.log("Adding device: " + JSON.stringify(device));
     devices.push(device);
   } else {
-    res.send("validation error!");
+    res.status(400).send("validation error!");
   }
   res.send("ok");
-})
+});
+
+app.delete("/devices/:id", function(req, res) {
+  console.log(JSON.stringify(req.params));
+  let id = req.params["id"];
+  let filtered = devices.filter(dev => dev["id"] === id);
+  if(filtered.length < 1) {
+    res.status(404).send("not found");
+  } else {
+    console.log("Deleteing device: " + JSON.stringify(filtered[0]));
+    devices.splice(devices.indexOf(filtered[0], 1));
+    res.status(200).send("ok");
+  }
+  res.send("ok");
+});
 
 
 app.post("/updateCurrent", function (req, res) {
@@ -159,8 +173,8 @@ function readDevices() {
      *      simulation.simulateSmartHome(devices.devices, refreshConnected);
      * Der zweite Parameter ist dabei eine callback-Funktion, welche zum Updaten aller verbundenen Clients dienen soll.
      */
-     devices = JSON.parse(fs.readFileSync("resources/devices.json", "utf-8")).devices;
      simulation.simulateSmartHome(devices, refreshConnected);
+     devices = JSON.parse(fs.readFileSync("resources/devices.json", "utf-8")).devices;
 }
 
 
