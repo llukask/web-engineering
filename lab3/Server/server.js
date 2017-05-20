@@ -36,6 +36,7 @@ app.use(cors());
  */
 var devices = [];
 var credentials = {};
+var state = {};
 
 app.get("/devices", function(req, res) {
     "use strict"
@@ -228,6 +229,9 @@ app.post("/updateCurrent", function (req, res) {
      res.json(device);
 });
 
+app.get("/state", function(req, res) {
+  res.json(state);
+})
 
 function readUser() {
     "use strict";
@@ -265,13 +269,15 @@ function refreshConnected() {
      console.log("updating devices per ws");
 }
 
-
 var server = app.listen(8081, function () {
     "use strict";
     readUser();
     readDevices();
 
-    // console.log(devices)
+    var date = new Date();
+    state["start_date"] = (1900 + date.getYear()) + "-" + (1 + date.getMonth()) + "-" + date.getDate();
+    state["start_time"] = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    state["failed_logins"] = 0;
 
     var host = server.address().address;
     var port = server.address().port;
