@@ -21,6 +21,8 @@ import {EnumDeviceDetailsComponent} from "./components/enum-device-details.compo
 import {BooleanDeviceDetailsComponent} from "./components/boolean-device-details.component";
 import {OverlayComponent} from "./components/overlay.component";
 
+import {LoginGuard} from "./login.guard";
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ import {OverlayComponent} from "./components/overlay.component";
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "de-at" },
+    LoginGuard,
     DatePipe,
     DeviceService,
     DeviceParserService,
