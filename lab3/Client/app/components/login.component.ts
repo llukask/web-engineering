@@ -1,21 +1,34 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+
+import {AuthService} from '../services/auth.service';
 
 @Component({
     moduleId: module.id,
     selector: 'my-login',
     templateUrl: '../views/login.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
     loginError: boolean = false;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authSerivce: AuthService) {
+    }
+
+    ngOnInit() {
+      this.authSerivce.logout();
     }
 
     onSubmit(form: NgForm): void {
         //TODO Überprüfen Sie die Login-Daten über die REST-Schnittstelle und leiten Sie den Benutzer bei Erfolg auf die Overview-Seite weiter
-        this.router.navigate(['/overview']);
+        if(!form.valid) return;
+        this.authSerivce.login(form.value['username'],form.value['password']).subscribe(result =>  {
+          if(result === true) {
+            this.router.navigate(['/overview']);
+          } else {
+            //Display error or something
+          }
+        })
     }
 }
