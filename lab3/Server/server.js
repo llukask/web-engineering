@@ -137,6 +137,23 @@ app.post("/devices", function(req, res) {
   res.send("ok");
 });
 
+app.post("/devices/:id", function(req, res) {
+  console.log(req.body);
+  let id = req.params["id"];
+  let device = getDevice(id);
+  if(!device) {
+    res.status(404).send("device with id " + id + " does not exist");
+    return;
+  }
+  if(!req.body["display_name"]) {
+    res.status(400).send("display_name property is required!");
+    return;
+  }
+  device["display_name"] = req.body["display_name"];
+  refreshConnected();
+  res.json(device);
+});
+
 app.delete("/devices/:id", function(req, res) {
   console.log(JSON.stringify(req.params));
   let id = req.params["id"];
@@ -207,6 +224,7 @@ app.post("/updateCurrent", function (req, res) {
 
      console.log("new value is: " +  newVal);
      simulation.updatedDeviceValue(device, controlUnit, newVal);
+     refreshConnected();
      res.json(device);
 });
 
