@@ -39,8 +39,7 @@ var credentials = {};
 
 app.get("/devices", function(req, res) {
     "use strict"
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(devices));
+    res.json(devices);
 });
 
 var images = {
@@ -114,6 +113,14 @@ function makeDevice(dev) {
   return Object.assign(dev, images[dev["type"]]);
 }
 
+function getDevice(id) {
+  return devices.filter(dev => dev["id"] === id)[0];
+}
+
+function removeDevice(device) {
+  return devices.splice(devices.indexOf(device), 1);
+}
+
 app.post("/devices", function(req, res) {
   "use strict"
   console.log(req.body);
@@ -122,7 +129,7 @@ app.post("/devices", function(req, res) {
     let device = makeDevice(deviceReq);
     console.log("Adding device: " + JSON.stringify(device));
     devices.push(device);
-    res.type('json');
+    res.setHeader("Content-Type", "application/json");
     res.status(200).send(JSON.stringify(device));
   } else {
     res.status(400).send("validation error!");
@@ -133,33 +140,80 @@ app.post("/devices", function(req, res) {
 app.delete("/devices/:id", function(req, res) {
   console.log(JSON.stringify(req.params));
   let id = req.params["id"];
-  let filtered = devices.filter(dev => dev["id"] === id);
-  if(filtered.length < 1) {
-    res.status(404).send("not found");
-  } else {
-    console.log("Deleteing device: " + JSON.stringify(filtered[0]));
-    devices.splice(devices.indexOf(filtered[0], 1));
+  let device = getDevice(id);
+  if(device) {
+    console.log("Deleting device: " + JSON.stringify(device));
+    removeDevice(device);
     res.status(200).send("ok");
+  } else {
+    res.status(404).send("device with id " + id + " not found");
   }
-  res.send("ok");
 });
 
 
 app.post("/updateCurrent", function (req, res) {
     "use strict";
-    //TODO Vervollständigen Sie diese Funktion, welche den aktuellen Wert eines Gerätes ändern soll
+    // Vervollständigen Sie diese Funktion, welche den aktuellen Wert eines Gerätes ändern soll
     /*
      * Damit die Daten korrekt in die Simulation übernommen werden können, verwenden Sie bitte die nachfolgende Funktion.
      *      simulation.updatedDeviceValue(device, control_unit, Number(new_value));
      * Diese Funktion verändert gleichzeitig auch den aktuellen Wert des Gerätes, Sie müssen diese daher nur mit den korrekten Werten aufrufen.
      */
+     let id = req.body["id"];
+     let controlUnitIdx = req.body["control_unit_index"];
+     let newVal = req.body["new_value"];
 
+     let device = getDevice(id);
+     if(!device) {
+       res.status(404).send("device with id " + id + " not found!");
+       return;
+     }
+     let controlUnit = device["control_units"][controlUnitIdx];
+     if(!controlUnit) {
+       res.status(404).send("control unit with index " + controlUnitIdx
+        + " not found on device with id " + id);
+       return;
+     }
+
+     console.log("updating cu: " + JSON.stringify(controlUnit) + " in device " + device);
+
+     switch (controlUnit["type"]) {
+       case "boolean":
+         if(newVal !== 0 && newVal !== 1) {
+           res.status(400).send("value " + newVal + "is invalid for device of type boolean");
+           return;
+         }
+         break;
+       case "enum":
+         if(newVal < 0 || newVal >= controlUnit["values"].length) {
+           res.status(400).send("value " + newVal + "is invalid for device of "
+              + "type enum with values " + JSON.stringify(controlUnit["values"]));
+           return;
+         }
+        break;
+        case "continuous":
+          if(newVal < controlUnit["min"] || newVal > controlUnit["max"]) {
+            res.status(400).send("value " + newVal + "is invalid for device of "
+               + "type continuous with min: " + controlUnit["min"] + " and max: "
+               + controlUnit["max"]);
+            return;
+          }
+         break;
+       default:
+        console.error("this should not happen!!!");
+        return;
+     }
+
+
+     console.log("new value is: " +  newVal);
+     simulation.updatedDeviceValue(device, controlUnit, newVal);
+     res.json(device);
 });
 
 
 function readUser() {
     "use strict";
-    //TODO Lesen Sie die Benutzerdaten aus dem login.config File ein.
+    // Lesen Sie die Benutzerdaten aus dem login.config File ein.
     let userContents = fs.readFileSync("resources/login.config", "utf-8");
     let lines = userContents.split('\r\n');
     let pairs = lines.map(l => l.split(': '));
@@ -190,6 +244,7 @@ function refreshConnected() {
      *
      * Bitte beachten Sie, dass diese Funktion von der Simulation genutzt wird um periodisch die simulierten Daten an alle Clients zu übertragen.
      */
+     console.log("updating devices per ws");
 }
 
 
