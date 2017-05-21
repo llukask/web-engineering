@@ -5,7 +5,7 @@ import {DEVICES} from '../resources/mock-device';
 import {DeviceParserService} from './device-parser.service';
 
 import 'rxjs/add/operator/toPromise';
-import {Http, HttpModule, Request, Response} from "@angular/http";
+import {Http, HttpModule, Request, RequestOptions, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 
 
@@ -31,8 +31,14 @@ export class DeviceService {
         return Observable.throw(errMsg);
     }
 
+    changeName(id: string, newName: string) : void {
+        console.log("Changing name for device " + id + " to " + newName);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        Promise.resolve(this.http.post("http://localhost:8081/devices/" + id, JSON.stringify({display_name: newName}), options).toPromise());
+    }
+
     getDevices(): Promise<Device[]> {
-        //TODO Lesen Sie die Geräte über die REST-Schnittstelle aus
         /*
          * Verwenden Sie das DeviceParserService um die via REST ausgelesenen Geräte umzuwandeln.
          * Das Service ist dabei bereits vollständig implementiert und kann wie unten demonstriert eingesetzt werden.
