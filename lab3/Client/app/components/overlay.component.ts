@@ -21,6 +21,13 @@ export class OverlayComponent implements OnInit {
   selected_type: string = null;
   controlUnitType_selected: string = null;
 
+  displayName: string = "";
+  typeName: string = "";
+  cuName: string = "";
+  cuMin: string = "";
+  cuMax: string = "";
+  possibleValues: string = "";
+
   addError: boolean = false;
   createError: boolean = false;
 
@@ -46,13 +53,22 @@ export class OverlayComponent implements OnInit {
    * @param form
    */
   onSubmit(form: NgForm): void {
+
+
+    console.log("displayName: " + this.displayName);
+    console.log("typeName: " + this.typeName);
+    console.log("selectedType: " + this.selected_type);
+
+    console.log("cuName: " + this.displayName);
+    console.log("cuType:" + this.selected_type);
+    console.log("displayName: " + this.displayName);
+    console.log("displayName: " + this.displayName);
+
     form.reset();
     this.overviewComponent.closeAddDeviceWindow();
 
     //TODO Lesen Sie Daten aus der Form aus und übertragen Sie diese an Ihre REST-Schnittstelle
-
   }
-
   isSelected(type: string): boolean {
     return type == this.device_types[0];
   }

@@ -20,10 +20,11 @@ export class SidebarComponent implements OnInit{
         //TODO Lesen Sie über die REST-Schnittstelle den Status des Servers aus und speichern Sie diesen in obigen Variablen
         let headers = new Headers({ 'token': JSON.parse(localStorage.getItem('currentUser')).token });
         let options = new RequestOptions({ headers: headers });
-        this.http.get("http://localhost:8081/state", options).map((response: Response) => {
-            let state = response.json();
-            console.log(JSON.stringify(state));
+        this.http.get("http://localhost:8081/state").map((response: Response) => {
+            return response.json();
+        }).toPromise().then(state => {
             this.failed_logins = state['failed_logins'];
+            this.server_start = new Date(state['server_start'] * 1000);
         });
     }
 

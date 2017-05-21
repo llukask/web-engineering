@@ -38,6 +38,12 @@ export class DeviceService {
         Promise.resolve(this.http.post("http://localhost:8081/devices/" + id, JSON.stringify({display_name: newName}), options).toPromise());
     }
 
+    addDevice(device: any): void {
+        console.log("creating device " + device);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+    }
+
     getDevices(): Promise<Device[]> {
         /*
          * Verwenden Sie das DeviceParserService um die via REST ausgelesenen Geräte umzuwandeln.
