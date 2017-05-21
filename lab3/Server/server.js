@@ -36,7 +36,7 @@ app.use(cors());
  */
 var devices = [];
 var credentials = {};
-var state = {};
+var tokens = [];
 
 app.get("/devices", function(req, res) {
     "use strict"
@@ -138,23 +138,6 @@ app.post("/devices", function(req, res) {
   res.send("ok");
 });
 
-app.post("/devices/:id", function(req, res) {
-  console.log(req.body);
-  let id = req.params["id"];
-  let device = getDevice(id);
-  if(!device) {
-    res.status(404).send("device with id " + id + " does not exist");
-    return;
-  }
-  if(!req.body["display_name"]) {
-    res.status(400).send("display_name property is required!");
-    return;
-  }
-  device["display_name"] = req.body["display_name"];
-  refreshConnected();
-  res.json(device);
-});
-
 app.delete("/devices/:id", function(req, res) {
   console.log(JSON.stringify(req.params));
   let id = req.params["id"];
@@ -225,13 +208,25 @@ app.post("/updateCurrent", function (req, res) {
 
      console.log("new value is: " +  newVal);
      simulation.updatedDeviceValue(device, controlUnit, newVal);
-     refreshConnected();
      res.json(device);
 });
 
-app.get("/state", function(req, res) {
-  res.json(state);
-})
+app.post("/auth", function (req, res) {
+  var user = new Object();
+  user.username = req.body['username'];
+  user.password = req.body['password'];
+  readUser();
+
+  if(credentials.username == user.username &&
+     credentials.password == user.password) {
+    var token = jwt.sign(user, 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869');
+    res.status(200).send(token)
+    tokens.push(token);
+    console.log(tokens);
+  } else {
+    res.status(403).send("User '" + user.username + "' not found or wrong password.")
+  }
+});
 
 function readUser() {
     "use strict";
@@ -269,15 +264,13 @@ function refreshConnected() {
      console.log("updating devices per ws");
 }
 
+
 var server = app.listen(8081, function () {
     "use strict";
     readUser();
     readDevices();
 
-    var date = new Date();
-    state["start_date"] = (1900 + date.getYear()) + "-" + (1 + date.getMonth()) + "-" + date.getDate();
-    state["start_time"] = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    state["failed_logins"] = 0;
+    // console.log(devices)
 
     var host = server.address().address;
     var port = server.address().port;
