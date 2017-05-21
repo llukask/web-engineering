@@ -14,7 +14,6 @@ export class AuthService {
     }
 
     login(username: string, password: string): Observable<boolean> {
-
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
