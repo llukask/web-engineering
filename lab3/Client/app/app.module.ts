@@ -22,6 +22,7 @@ import {BooleanDeviceDetailsComponent} from "./components/boolean-device-details
 import {OverlayComponent} from "./components/overlay.component";
 
 import {LoginGuard} from "./login.guard";
+import {AuthService} from "./services/auth.service";
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import {LoginGuard} from "./login.guard";
   providers: [
     { provide: LOCALE_ID, useValue: "de-at" },
     LoginGuard,
+    AuthService,
     DatePipe,
     DeviceService,
     DeviceParserService,

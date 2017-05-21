@@ -13,21 +13,22 @@ export class LoginComponent implements OnInit {
 
     loginError: boolean = false;
 
-    constructor(private router: Router, private authSerivce: AuthService) {
+    constructor(private router: Router, private authService: AuthService) {
     }
 
     ngOnInit() {
-      this.authSerivce.logout();
+      this.authService.logout();
     }
 
     onSubmit(form: NgForm): void {
-        //TODO Überprüfen Sie die Login-Daten über die REST-Schnittstelle und leiten Sie den Benutzer bei Erfolg auf die Overview-Seite weiter
+        // Überprüfen Sie die Login-Daten über die REST-Schnittstelle und leiten Sie den Benutzer bei Erfolg auf die Overview-Seite weiter
         if(!form.valid) return;
-        this.authSerivce.login(form.value['username'],form.value['password']).subscribe(result =>  {
+        this.authService.login(form.value['username'],form.value['password']).subscribe(result =>  {
           if(result === true) {
             this.router.navigate(['/overview']);
           } else {
             //Display error or something
+            alert("Login Failed");
           }
         })
     }
