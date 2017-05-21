@@ -2,6 +2,11 @@ import {Component, OnInit, AfterViewChecked} from '@angular/core';
 import {DeviceService} from "../services/device.service";
 import {Device} from "../model/device";
 
+import 'rxjs/add/operator/toPromise';
+import {Http, HttpModule, Request, Response} from "@angular/http";
+import {Observable} from "rxjs/Observable";
+
+
 declare var $: any;
 
 @Component({
@@ -17,7 +22,7 @@ export class DevicesComponent implements OnInit, AfterViewChecked {
 
     device_num: number = 0;
 
-    constructor(private deviceService: DeviceService) {
+    constructor(private deviceService: DeviceService, private http: Http) {
     }
 
     ngOnInit(): void {
@@ -132,6 +137,15 @@ export class DevicesComponent implements OnInit, AfterViewChecked {
      */
     removeDevice(device: Device): void {
         //TODO Löschen Sie das angegebene Geräte über die REST-Schnittstelle
+        //let devs = this.deviceService.getDevices();
+        Promise.resolve(this.http.delete("http://localhost:8081/devices" + device.id));
+
+
+        for(var i = 0; i < this.devices.length; i++){
+            if(device == this.devices[i]) {
+                this.devices.splice(i, 1);
+            }
+        }
     }
 
     /**
