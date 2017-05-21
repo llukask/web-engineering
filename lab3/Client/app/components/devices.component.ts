@@ -123,7 +123,9 @@ export class DevicesComponent implements OnInit, AfterViewChecked {
      */
     finishEdit(device: Device): void {
         this.showLabel(device);
-        //TODO Lesen Sie den geänderten Anzeigenamen aus und speichern Sie diesen über die REST-Schnittstelle
+        // Lesen Sie den geänderten Anzeigenamen aus und speichern Sie diesen über die REST-Schnittstelle
+        console.log("Finishing edit for device " + device.id);
+        this.deviceService.changeName(device.id, device.display_name);
     }
 
     /**

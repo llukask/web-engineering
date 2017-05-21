@@ -271,6 +271,7 @@ app.get("/state", function(req, res) {
 app.post("/devices/:id", function(req, res) {
   let id = req.params['id'];
   let device = getDevice(id);
+  console.log("Got update request: " + id);
   if(device) {
     let newName = req.body['display_name'];
     if(newName) {
