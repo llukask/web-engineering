@@ -216,23 +216,50 @@ app.post("/updateCurrent", function (req, res) {
 });
 
 app.post("/auth", function (req, res) {
-  var user = new Object();
-  user.username = req.body['username'];
-  user.password = req.body['password'];
+  for(let i = tokens.length-1; i >= 0; i--) {
+    try {
+      jwt.verify(tokens[i], 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869', { maxAge: '15m' });
+    } catch(err) {
+      tokens.splice(i, 1);
+    }
+  }
 
-  console.log(JSON.stringify(user));
+  var payload = new Object();
+  payload.username = req.body['username'];
+  payload.password = req.body['password'];
+
+  console.log(JSON.stringify(payload));
 
   readUser();
 
-  if(credentials.username == user.username &&
-     credentials.password == user.password) {
-    var token = jwt.sign(user, 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869');
+  if(credentials.username == payload.username &&
+     credentials.password == payload.password) {
+    var token = jwt.sign(payload, 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869');
     res.json({token: token});
     tokens.push(token);
     console.log(tokens);
   } else {
-    res.json({message: "User '" + user.username + "' not found or wrong password."});
+    res.json({message: "User '" + payload.username + "' not found or wrong password."});
   }
+});
+
+app.post("/deauth", function(req, res) {
+  let token = req.body['token'];
+
+  for(let i = tokens.length-1; i >= 0; i--) {
+    if(tokens[i] === token) {
+      tokens.splice(i, 1);
+    }
+
+    try {
+      jwt.verify(tokens[i], 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869', { maxAge: '15m' });
+    } catch(err) {
+      tokens.splice(i, 1);
+    }
+  }
+
+  res.json({message: "Logged out"});
+  console.log(tokens);
 });
 
 app.get("/state", function(req, res) {

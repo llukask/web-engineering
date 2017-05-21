@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
           if(result === true) {
             this.router.navigate(['/overview']);
           } else {
-            //Display error or something
             alert("Login Failed");
           }
         })

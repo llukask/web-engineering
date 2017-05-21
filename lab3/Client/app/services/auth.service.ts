@@ -19,9 +19,9 @@ export class AuthService {
 
         return this.http.post('http://localhost:8081/auth', JSON.stringify({ username: username, password: password }), options)
             .map((response: Response) => {
-                console.log(response.text());
+                //console.log(response.text());
                 let token = response.json() && response.json().token;
-                console.log(token);
+                //console.log(token);
                 if (token) {
                     this.token = token;
                     localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
@@ -33,6 +33,10 @@ export class AuthService {
     }
 
     logout(): void {
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+        console.log(this.token);
+        var res = this.http.post('http://localhost:8081/deauth', JSON.stringify({ token: this.token }), options);
         this.token = null;
         localStorage.removeItem('currentUser');
     }
