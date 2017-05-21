@@ -19,9 +19,10 @@ export class SidebarComponent implements OnInit{
     ngOnInit(): void {
         //TODO Lesen Sie über die REST-Schnittstelle den Status des Servers aus und speichern Sie diesen in obigen Variablen
         this.http.get("http://localhost:8081/state").map((response: Response) => {
-            let state = response.json();
-            console.log(JSON.stringify(state));
+            return response.json();
+        }).toPromise().then(state => {
             this.failed_logins = state['failed_logins'];
+            this.server_start = new Date(state['server_start'] * 1000);
         });
     }
 

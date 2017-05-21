@@ -360,6 +360,7 @@ var server = app.listen(8081, function () {
     let date = new Date();
     state['start_date'] = (1900 + date.getYear()) + "-" + (1 + date.getMonth()) + "-" + date.getDate();
     state['start_time'] = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    state['server_start'] = Math.floor(Date.now() / 1000);
     state['failed_logins'] = 0;
 
     var host = server.address().address;
