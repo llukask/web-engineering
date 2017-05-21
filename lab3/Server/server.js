@@ -37,6 +37,7 @@ app.use(cors());
 var devices = [];
 var credentials = {};
 var state = {};
+var wsConnected = [];
 
 app.get("/devices", function(req, res) {
     "use strict"
@@ -231,7 +232,18 @@ app.post("/updateCurrent", function (req, res) {
 
 app.get("/state", function(req, res) {
   res.json(state);
-})
+});
+
+app.ws("/devices", function(ws, res) {
+  console.log("connected!");
+  wsConnected.push(ws);
+  ws.on('close', function() {
+    let idx = wsConnected.indexOf(ws);
+    if(idx >= 0) {
+      wsConnected.splice(idx, 1);
+    }
+  });
+});
 
 function readUser() {
     "use strict";
@@ -267,6 +279,7 @@ function refreshConnected() {
      * Bitte beachten Sie, dass diese Funktion von der Simulation genutzt wird um periodisch die simulierten Daten an alle Clients zu übertragen.
      */
      console.log("updating devices per ws");
+     wsConnected.forEach(ws => ws.send(devices));
 }
 
 var server = app.listen(8081, function () {
