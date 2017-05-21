@@ -5,15 +5,31 @@ import {DEVICES} from '../resources/mock-device';
 import {DeviceParserService} from './device-parser.service';
 
 import 'rxjs/add/operator/toPromise';
+import {Http, HttpModule, Request, Response} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 
 
 @Injectable()
 export class DeviceService {
 
-    constructor(private parserService: DeviceParserService) {
+    constructor(private parserService: DeviceParserService, private http: Http) {
     }
 
     //TODO Sie können dieses Service benutzen, um alle REST-Funktionen für die Smart-Devices zu implementieren
+
+    private static handleError (error: Response | any) {
+        // In a real world app, you might use a remote logging infrastructure
+        let errMsg: string;
+        if (error instanceof Response) {
+            const body = error.json() || '';
+            const err = body.error || JSON.stringify(body);
+            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+        } else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Observable.throw(errMsg);
+    }
 
     getDevices(): Promise<Device[]> {
         //TODO Lesen Sie die Geräte über die REST-Schnittstelle aus
@@ -21,13 +37,18 @@ export class DeviceService {
          * Verwenden Sie das DeviceParserService um die via REST ausgelesenen Geräte umzuwandeln.
          * Das Service ist dabei bereits vollständig implementiert und kann wie unten demonstriert eingesetzt werden.
          */
-        return Promise.resolve(DEVICES).then(devices => {
-            for (let i = 0; i < devices.length; i++) {
-                devices[i] = this.parserService.parseDevice(devices[i]);
-            }
-            return devices;
-        });
+
+        return this.http.get("http://localhost:8081/devices").map((response: Response) => {
+            let devs = response.json() as Device[];
+            console.log(JSON.stringify(devs));
+            return devs.map((dev) => {
+                console.log(dev);
+                return this.parserService.parseDevice(dev);
+            });
+        }).toPromise();
     }
+
+
 
     getDevice(id: string): Promise<Device> {
         return this.getDevices()
