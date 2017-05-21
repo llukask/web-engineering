@@ -3,7 +3,7 @@ import {DeviceService} from "../services/device.service";
 import {Device} from "../model/device";
 
 import 'rxjs/add/operator/toPromise';
-import {Http, HttpModule, Request, Response} from "@angular/http";
+import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {Observable} from "rxjs/Observable";
 
 
@@ -138,9 +138,10 @@ export class DevicesComponent implements OnInit, AfterViewChecked {
      * @param device
      */
     removeDevice(device: Device): void {
-        //TODO Löschen Sie das angegebene Geräte über die REST-Schnittstelle
-
-        Promise.resolve(this.http.delete("http://localhost:8081/devices/" + device.id).toPromise());
+        //DONE Löschen Sie das angegebene Geräte über die REST-Schnittstelle
+        let headers = new Headers({ 'token': JSON.parse(localStorage.getItem('currentUser')).token });
+        let options = new RequestOptions({ headers: headers });
+        Promise.resolve(this.http.delete("http://localhost:8081/devices/" + device.id, options).toPromise());
 
         for(var i = 0; i < this.devices.length; i++){
             if(device == this.devices[i]) {

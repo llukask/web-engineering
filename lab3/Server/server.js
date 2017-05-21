@@ -44,6 +44,10 @@ var wsConnected = [];
 
 app.get("/devices", function(req, res) {
     "use strict"
+    if(!validateToken(req.header['token'])) {
+      res.status(403).send("Token Validation Failed");
+      return;
+    }
     res.json(devices);
 });
 
@@ -61,6 +65,17 @@ var images = {
 };
 
 let cuTypes = ["boolean", "continous", "enum"];
+
+function validateToken(token) {
+  try {
+    var decoded = jwt.verify(token, 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869', { maxAge: '15m' });
+    if(tokens.includes(token)) {
+        return true;
+    }
+  } catch(err) {
+    return false;
+  }
+}
 
 function validateControlUnit(cu) {
   let cuPropsExist = cu.hasOwnProperty("name")
@@ -128,6 +143,12 @@ function removeDevice(device) {
 
 app.post("/devices", function(req, res) {
   "use strict"
+
+  if(!validateToken(req.header['token'])) {
+    res.status(403).send("Token Validation Failed");
+    return;
+  }
+
   console.log(req.body);
   let deviceReq = req.body;
   if(validateDeviceReq(req.body)) {
@@ -143,6 +164,11 @@ app.post("/devices", function(req, res) {
 });
 
 app.delete("/devices/:id", function(req, res) {
+  if(!validateToken(req.header['token'])) {
+    res.status(403).send("Token Validation Failed");
+    return;
+  }
+
   console.log(JSON.stringify(req.params));
   let id = req.params["id"];
   let device = getDevice(id);
@@ -164,6 +190,13 @@ app.post("/updateCurrent", function (req, res) {
      *      simulation.updatedDeviceValue(device, control_unit, Number(new_value));
      * Diese Funktion verändert gleichzeitig auch den aktuellen Wert des Gerätes, Sie müssen diese daher nur mit den korrekten Werten aufrufen.
      */
+
+     if(!validateToken(req.header['token'])) {
+       res.status(403).send("Token Validation Failed");
+       return;
+     }
+
+
      let id = req.body["id"];
      let controlUnitIdx = req.body["control_unit_index"];
      let newVal = req.body["new_value"];
@@ -217,12 +250,10 @@ app.post("/updateCurrent", function (req, res) {
 
 app.get("/auth", function(req, res) {
   var token = req.headers['token'];
-  try {
-    var decoded = jwt.verify(token, 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869', { maxAge: '15m' });
-    if(tokens.includes(token)) {
-        res.json({ valid: true });
-    }
-  } catch(err) {
+
+  if(validateToken(token)){
+    res.json({ valid: true });
+  } else {
     res.json({ valid: false });
   }
 });
@@ -277,10 +308,20 @@ app.post("/deauth", function(req, res) {
 });
 
 app.get("/state", function(req, res) {
+  if(!validateToken(req.header['token'])) {
+    res.status(403).send("Token Validation Failed");
+    return;
+  }
+
   res.json(state);
 });
 
 app.post("/devices/:id", function(req, res) {
+  if(!validateToken(req.header['token'])) {
+    res.status(403).send("Token Validation Failed");
+    return;
+  }
+
   let id = req.params['id'];
   let device = getDevice(id);
   console.log("Got update request: " + id);
