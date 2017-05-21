@@ -239,7 +239,8 @@ app.post("/auth", function (req, res) {
     tokens.push(token);
     console.log(tokens);
   } else {
-    res.json({message: "User '" + payload.username + "' not found or wrong password."});
+    res.json({message: "User '" + user.username + "' not found or wrong password."});
+    state["failed_logins"]++;
   }
 });
 
@@ -265,6 +266,23 @@ app.post("/deauth", function(req, res) {
 app.get("/state", function(req, res) {
   res.json(state);
 });
+
+app.post("/devices/:id", function(req, res) {
+  let id = req.params['id'];
+  let device = getDevice(id);
+  if(device) {
+    let newName = req.body['display_name'];
+    if(newName) {
+      device['display_name'] = newName;
+      refreshConnected();
+      res.json(device);
+    } else {
+      res.status(400).send("Request is missing display_name property!");
+    }
+  } else {
+    res.status(404).send("device with id " + id + " not found!");
+  }
+})
 
 app.ws("/devices", function(ws, res) {
   console.log("connected!");
@@ -324,6 +342,11 @@ var server = app.listen(8081, function () {
     readDevices();
 
     // console.log(devices)
+
+    let date = new Date();
+    state['start_date'] = (1900 + date.getYear()) + "-" + (1 + date.getMonth()) + "-" + date.getDate();
+    state['start_time'] = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    state['failed_logins'] = 0;
 
     var host = server.address().address;
     var port = server.address().port;
