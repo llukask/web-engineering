@@ -49,8 +49,9 @@ export class DeviceService {
          * Verwenden Sie das DeviceParserService um die via REST ausgelesenen Geräte umzuwandeln.
          * Das Service ist dabei bereits vollständig implementiert und kann wie unten demonstriert eingesetzt werden.
          */
-
-        return this.http.get("http://localhost:8081/devices").map((response: Response) => {
+        let headers = new Headers({ 'token': JSON.parse(localStorage.getItem('currentUser')).token });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get("http://localhost:8081/devices", options).map((response: Response) => {
             let devs = response.json() as Device[];
             console.log(JSON.stringify(devs));
             return devs.map((dev) => {
