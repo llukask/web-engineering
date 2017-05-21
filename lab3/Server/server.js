@@ -231,7 +231,7 @@ app.post("/auth", function (req, res) {
     tokens.push(token);
     console.log(tokens);
   } else {
-    res.status(403).send("User '" + user.username + "' not found or wrong password.")
+    res.json({message: "User '" + user.username + "' not found or wrong password."});
   }
 });
 
