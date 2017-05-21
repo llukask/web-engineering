@@ -140,7 +140,7 @@ export class DevicesComponent implements OnInit, AfterViewChecked {
     removeDevice(device: Device): void {
         //TODO Löschen Sie das angegebene Geräte über die REST-Schnittstelle
 
-        Promise.resolve(this.http.delete("http://localhost:8081/devices/:" + device.id));
+        Promise.resolve(this.http.delete("http://localhost:8081/devices/" + device.id).toPromise());
 
         for(var i = 0; i < this.devices.length; i++){
             if(device == this.devices[i]) {
