@@ -363,6 +363,37 @@ function readUser() {
     console.log(credentials);
 }
 
+function changePassword(password) {
+  readUser();
+  fs.writeFileSync("resources/login.config",
+                   "username: " + credentials['username']
+                  +"\r\n"
+                  +"password: " + password);
+}
+
+app.post("/password", function(req, res) {
+  var username = req.body['username'];
+  var oldpassword = req.body['oldpassword'];
+  var newpassword = req.body['newpassword'];
+
+  //Delete old or unvalid tokens
+  for(let i = tokens.length-1; i >= 0; i--) {
+    try {
+      jwt.verify(tokens[i], 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869', { maxAge: '15m' });
+    } catch(err) {
+      tokens.splice(i, 1);
+    }
+  }
+  readUser();
+
+  if(credentials.username == username &&
+     credentials.password == oldpassword) {
+       changePassword(newpassword);
+  } else {
+    res.json({message: "Wrong password"});
+  }
+});
+
 function readDevices() {
     "use strict";
     //Lesen Sie die Gerätedaten aus der devices.json Datei ein.
