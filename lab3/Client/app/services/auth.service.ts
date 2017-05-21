@@ -13,6 +13,15 @@ export class AuthService {
         this.token = currentUser && currentUser.token;
     }
 
+    checkToken(token: string) {
+        let headers = new Headers({ 'token': token });
+        let options = new RequestOptions({ headers: headers });
+        return Promise.resolve(this.http.get('http://localhost:8081/auth', options)
+          .map((response: Response) => {
+            return response.json() && response.json().valid;
+          }).toPromise());
+    }
+
     login(username: string, password: string): Observable<boolean> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });

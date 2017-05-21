@@ -24,7 +24,7 @@ app.use(cors());
  *  DONE Hinzufügen eines neuen Gerätes
  *  DONE Löschen eines vorhandenen Gerätes
  *  DONE Bearbeiten eines vorhandenen Gerätes (Verändern des Gerätezustandes und Anpassen des Anzeigenamens)
- *  TODO Log-in und Log-out des Benutzers
+ *  DONE Log-in und Log-out des Benutzers
  *  TODO Ändern des Passworts
  *  DONE Abrufen des Serverstatus (Startdatum, fehlgeschlagene Log-ins).
  *
@@ -215,6 +215,18 @@ app.post("/updateCurrent", function (req, res) {
      res.json(device);
 });
 
+app.get("/auth", function(req, res) {
+  var token = req.headers['token'];
+  try {
+    var decoded = jwt.verify(token, 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869', { maxAge: '15m' });
+    if(tokens.includes(token)) {
+        res.json({ valid: true });
+    }
+  } catch(err) {
+    res.json({ valid: false });
+  }
+});
+
 app.post("/auth", function (req, res) {
   var payload = new Object();
   payload.username = req.body['username'];
@@ -239,7 +251,7 @@ app.post("/auth", function (req, res) {
     tokens.push(token);
     console.log(tokens);
   } else {
-    res.json({message: "User '" + user.username + "' not found or wrong password."});
+    res.json({message: "User '" + payload.username + "' not found or wrong password."});
     state["failed_logins"]++;
   }
 });
