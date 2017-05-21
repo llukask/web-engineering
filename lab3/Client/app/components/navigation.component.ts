@@ -35,7 +35,8 @@ export class NavigationComponent {
   }
 
   doLogout(): void {
-    this.authService.logout();
+    console.log("navigation: logout");
+    Promise.resolve(this.authService.logout().toPromise());
     this.router.navigate(["/login"]);
   }
 

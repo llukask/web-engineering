@@ -33,7 +33,8 @@ export class AuthService {
     }
 
     logout(): Observable<void> {
-        var token = this.token;
+        console.log("authService: logout");
+        let token = this.token;
         this.token = null;
         localStorage.removeItem('currentUser');
         let headers = new Headers({ 'Content-Type': 'application/json' });

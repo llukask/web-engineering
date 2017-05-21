@@ -245,6 +245,7 @@ app.post("/auth", function (req, res) {
 });
 
 app.post("/deauth", function(req, res) {
+  console.log("Deauth got: " + req.body);
   let token = req.body['token'];
 
   for(let i = tokens.length-1; i >= 0; i--) {
