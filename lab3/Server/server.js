@@ -18,15 +18,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 
-//TODO Implementieren Sie hier Ihre REST-Schnittstelle
+// Implementieren Sie hier Ihre REST-Schnittstelle
 /* Ermöglichen Sie wie in der Angabe beschrieben folgende Funktionen:
- *  Abrufen aller Geräte als Liste
- *  Hinzufügen eines neuen Gerätes
- *  Löschen eines vorhandenen Gerätes
- *  Bearbeiten eines vorhandenen Gerätes (Verändern des Gerätezustandes und Anpassen des Anzeigenamens)
- *  Log-in und Log-out des Benutzers
- *  Ändern des Passworts
- *  Abrufen des Serverstatus (Startdatum, fehlgeschlagene Log-ins).
+ *  DONE Abrufen aller Geräte als Liste
+ *  DONE Hinzufügen eines neuen Gerätes
+ *  DONE Löschen eines vorhandenen Gerätes
+ *  DONE Bearbeiten eines vorhandenen Gerätes (Verändern des Gerätezustandes und Anpassen des Anzeigenamens)
+ *  TODO Log-in und Log-out des Benutzers
+ *  TODO Ändern des Passworts
+ *  DONE Abrufen des Serverstatus (Startdatum, fehlgeschlagene Log-ins).
  *
  *  BITTE BEACHTEN!
  *      Verwenden Sie dabei passende Bezeichnungen für die einzelnen Funktionen.
@@ -237,6 +237,9 @@ app.get("/state", function(req, res) {
 app.ws("/devices", function(ws, res) {
   console.log("connected!");
   wsConnected.push(ws);
+  ws.on('message', function(data) {
+    console.log("client says " + JSON.stringify(data));
+  });
   ws.on('close', function() {
     let idx = wsConnected.indexOf(ws);
     if(idx >= 0) {
@@ -270,7 +273,7 @@ function readDevices() {
 
 function refreshConnected() {
     "use strict";
-    //TODO Übermitteln Sie jedem verbundenen Client die aktuellen Gerätedaten über das Websocket
+    // Übermitteln Sie jedem verbundenen Client die aktuellen Gerätedaten über das Websocket
     /*
      * Jedem Client mit aktiver Verbindung zum Websocket sollen die aktuellen Daten der Geräte übermittelt werden.
      * Dabei soll jeder Client die aktuellen Werte aller Steuerungselemente von allen Geräte erhalten.
@@ -278,8 +281,8 @@ function refreshConnected() {
      *
      * Bitte beachten Sie, dass diese Funktion von der Simulation genutzt wird um periodisch die simulierten Daten an alle Clients zu übertragen.
      */
-     console.log("updating devices per ws");
-     wsConnected.forEach(ws => ws.send(devices));
+     console.log("sending devices to " + wsConnected.length + " clients");
+     wsConnected.forEach(ws => ws.send(JSON.stringify(devices)));
 }
 
 var server = app.listen(8081, function () {
