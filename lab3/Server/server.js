@@ -216,6 +216,12 @@ app.post("/updateCurrent", function (req, res) {
 });
 
 app.post("/auth", function (req, res) {
+  var payload = new Object();
+  payload.username = req.body['username'];
+  payload.password = req.body['password'];
+  console.log(JSON.stringify(payload));
+
+  //Delete old or unvalid tokens
   for(let i = tokens.length-1; i >= 0; i--) {
     try {
       jwt.verify(tokens[i], 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869', { maxAge: '15m' });
@@ -223,12 +229,6 @@ app.post("/auth", function (req, res) {
       tokens.splice(i, 1);
     }
   }
-
-  var payload = new Object();
-  payload.username = req.body['username'];
-  payload.password = req.body['password'];
-
-  console.log(JSON.stringify(payload));
 
   readUser();
 
