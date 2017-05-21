@@ -35,7 +35,6 @@ export class NavigationComponent {
   }
 
   doLogout(): void {
-    // Loggen Sie den Benutzer über die REST-Schnittstelle aus
     this.authService.logout();
     this.router.navigate(["/login"]);
   }

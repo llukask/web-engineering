@@ -32,12 +32,17 @@ export class AuthService {
             });
     }
 
-    logout(): void {
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      let options = new RequestOptions({ headers: headers });
-        console.log(this.token);
-        var res = this.http.post('http://localhost:8081/deauth', JSON.stringify({ token: this.token }), options);
+    logout(): Observable<void> {
+        var token = this.token;
         this.token = null;
         localStorage.removeItem('currentUser');
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        console.log(this.token);
+        return this.http.post('http://localhost:8081/deauth', JSON.stringify({ token: token }), options)
+          .map((response: Response) => {
+            let message = response.json() && response.json().message;
+            console.log(message);
+        });
     }
 }
