@@ -219,12 +219,15 @@ app.post("/auth", function (req, res) {
   var user = new Object();
   user.username = req.body['username'];
   user.password = req.body['password'];
+
+  console.log(JSON.stringify(user));
+
   readUser();
 
   if(credentials.username == user.username &&
      credentials.password == user.password) {
     var token = jwt.sign(user, 'f3f9c3ed-b2d6-48e2-9243-1eb772f0d869');
-    res.status(200).send(token)
+    res.json({token: token});
     tokens.push(token);
     console.log(tokens);
   } else {
