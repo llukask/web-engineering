@@ -578,7 +578,7 @@ function getTwitterPublicationString(groupNum, uuid, date) {
     return date.toLocaleString() + " - Gruppe " + groupNum + " hat gerade ein Gerät mit folgender UUID hinzugefügt: " + uuid;
 }
 
-//TODO Stellen Sie die REST-Schnittstelle sowohl über http, wie auch über https zur Verfügung
+//DONE Stellen Sie die REST-Schnittstelle sowohl über http, wie auch über https zur Verfügung
 //Anmerkungen:
 //  - Die Schnittstelle darf weiterhin via http erreicht werden
 //  - Der Websocket soll auch weiterhin über http abgewickelt werden
