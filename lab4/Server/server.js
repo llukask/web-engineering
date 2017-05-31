@@ -586,3 +586,11 @@ var server = app.listen(8081, function () {
 
 });
 
+var httpsServer = https.createServer({
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem")
+}, app).listen(8082,  function () {
+    var host = httpsServer.address().address;
+    var port = httpsServer.address().port;
+    console.log("Big Smart Home Server listening at https://%s:%s", host, port);
+});
