@@ -30,6 +30,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 
+var twitterClient = new twitter({
+  consumer_key: 'GZ6tiy1XyB9W0P4xEJudQ',
+  consumer_secret: 'gaJDlW0vf7en46JwHAOkZsTHvtAiZ3QUd2mD1x26J9w',
+  access_token_key: '1366513208-MutXEbBMAVOwrbFmZtj1r4Ih2vcoHGHE2207002',
+  access_token_secret: 'RMPWOePlus3xtURWRVnv1TgrjTyK7Zk33evp4KKyA'
+});
+
 /**
  * Listet alle Geräte auf
  */
@@ -73,11 +80,20 @@ app.post("/createDevice", function (req, res) {
                 devices.devices.push(device);
                 res.json({status: 200, message: devices});
                 sendCreate(JSON.stringify(device));
-                //TODO erstellen Sie einen Publication String für Twitter und senden Sie diesen über die Twitter Bibliothek ab
+                //DONE erstellen Sie einen Publication String für Twitter und senden Sie diesen über die Twitter Bibliothek ab
                 //Tipps:
                 //  - die benötigte Bibliothek ist bereits eingebunden
                 //  - siehe https://www.npmjs.com/package/twitter für eine Beschreibung der Bibliothek
                 //  - verwenden Sie getTwitterPublicationString(groupNum, uuid, date) um den Publication String zu erstellen
+
+                var body = getTwitterPublicationString("104", id, new Date());
+                twitterClient.post('statuses/update', {status: body},  function(error, tweet, response) {
+                  if(error) {
+                    console.error("Error tweeting: '" + JSON.stringify(error) + "'");
+                  } else {
+                    console.log("Tweet text: '" + tweet.text + "'");
+                  }
+                });
             }
         });
     } else {
