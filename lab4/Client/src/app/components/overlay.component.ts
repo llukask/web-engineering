@@ -112,7 +112,8 @@ export class OverlayComponent implements OnInit {
         break;
       default:
         //TODO Lesen Sie die SPARQL - Informationen aus dem SessionStorage und speichern Sie die entsprechenden Informationen zum Gerät
-        sessionStorage.getItem("dbpediaEintrag")
+        let deviceinfos = JSON.parse(sessionStorage.getItem("dbpediaEintrag"));
+        console.log(JSON.stringify(deviceinfos));
         break;
     }
 
@@ -182,7 +183,7 @@ export class OverlayComponent implements OnInit {
   }
   
   private static extractData(res: Response) {
-    console.log("Got devices: " + res.json());
+    console.log("Got devices: " + JSON.stringify(res.json()));
     sessionStorage.setItem("dbpediaEintrag", res.json());
   }
 
