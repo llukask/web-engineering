@@ -190,7 +190,8 @@ export class OverlayComponent implements OnInit {
 
   getSPARQLTypes(): void {
     //TODO Lesen Sie mittels SPARQL die gewünschten Daten (wie in der Angabe beschrieben) aus und speichern Sie diese im SessionStorage
-	var query = "SELECT ?label ?url WHERE { ?dev a owl:Thing . ?dev rdfs:label ?label . ?dev <http://dbpedia.org/ontology/thumbnail> ?url .?dev <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Home_automation> . FILTER(LANGMATCHES(LANG(?label), \"de\"))}";
+
+	var query = 	"SELECT ?label ?url WHERE {?dev a owl:Thing .?dev rdfs:label ?label . ?dev <http://purl.org/dc/terms/subject> <http://dbpedia.org/resource/Category:Home_automation> .?dev <http://dbpedia.org/ontology/thumbnail> ?url .FILTER(LANG(?label)= \"de\") FILTER EXISTS  {?dcompany <http://dbpedia.org/ontology/product> ?dev.?dev <http://dbpedia.org/ontology/thumbnail> ?url. }}";
 	var searchURL = "http://dbpedia.org/sparql?query="+encodeURIComponent(query)+"&format=json";
 
 	this.http.post(searchURL, this.options).toPromise().then(OverlayComponent.extractData);
