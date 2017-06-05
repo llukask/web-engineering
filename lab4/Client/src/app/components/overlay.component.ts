@@ -1,3 +1,4 @@
+import {Http, Response, Headers, RequestOptions, URLSearchParams} from '@angular/http';
 import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {OverviewComponent} from "./overview.component";
@@ -5,6 +6,8 @@ import {DeviceService} from "../services/device.service";
 import {Device} from "../model/device";
 import {ControlUnit} from "../model/controlUnit";
 import {ControlType} from "../model/controlType";
+
+
 
 @Component({
   selector: 'my-overlay',
@@ -22,8 +25,14 @@ export class OverlayComponent implements OnInit {
 
   addError: boolean = false;
   createError: boolean = false;
+  
+  headers: Headers;
+  options: RequestOptions;
 
-  constructor(private deviceService: DeviceService) {
+  constructor(private deviceService: DeviceService, private http: Http) {
+	this.headers = new Headers({ 'Content-Type': 'application/json', 
+                                     'Accept': 'q=0.8;application/json;q=0.9' });
+	this.options = new RequestOptions({ headers: this.headers });
   }
 
 
@@ -163,6 +172,16 @@ export class OverlayComponent implements OnInit {
 
   getSPARQLTypes(): void {
     //TODO Lesen Sie mittels SPARQL die gewünschten Daten (wie in der Angabe beschrieben) aus und speichern Sie diese im SessionStorage
+	//let body = JSON.stringify();
+	var query = "SELECT ?label ?url where {?device a owl:Thing . ?device rdfs:label ?label . ?device dbo:thumbnail ?url . ?device dbo:product ?device . } LIMIT 4";
+	var searchURL = "http://dbpedia.org/sparql?query="+encodeURIComponent(query)+"&format=json";
+
+	this.http.post(searchURL, this.options).toPromise().then(this.extractData);
+  }
+  
+  private extractData(res: Response) {
+	let body = res.json();
+	//return body || {};
   }
 
 
