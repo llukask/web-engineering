@@ -46,6 +46,13 @@ export class OverlayComponent implements OnInit {
     this.controlUnitType_selected = this.controlUnit_types[0];
     this.getSPARQLTypes();
 	
+	// neue Devicetypen zu device_types hinzufuegen
+	let db = JSON.parse(sessionStorage.getItem("dbpediaEintrag"));
+	for(let i=0; i < db.length; i++){ 
+		this.device_types.push(db[i]["label"]);
+	}
+	
+
   }
 
   /**
@@ -112,8 +119,16 @@ export class OverlayComponent implements OnInit {
         break;
       default:
         //TODO Lesen Sie die SPARQL - Informationen aus dem SessionStorage und speichern Sie die entsprechenden Informationen zum Gerät
-        let deviceinfos = JSON.parse(sessionStorage.getItem("dbpediaEintrag"));
-        console.log(JSON.stringify(deviceinfos));
+        let db = JSON.parse(sessionStorage.getItem("dbpediaEintrag"));
+		for(let i=0; i < db.length; i++){ 
+			if(this.selected_type == db[i]["label"]){
+				device.image = db[i]["url"];
+				device.image_alt = db[i]["label"]+" als Indikator für Aktivierung";
+				device.description = "Genauere Informationen zu dieser "+db[i]["label"];
+			}
+		}
+		
+		console.log(JSON.stringify(db));
         break;
     }
 
@@ -182,8 +197,12 @@ export class OverlayComponent implements OnInit {
   }
   
   private static extractData(res: Response) {
-    console.log("Got devices: " + JSON.stringify(res.json()));
-    sessionStorage.setItem("dbpediaEintrag", res.json());
+    //console.log("Got devices: " + JSON.stringify(res.json()));
+	var results = res.json().results.bindings.map(function(binding : any) { 
+		return {label: binding.label.value, url: binding.url.value }});
+	//console.log("results: " + results);
+	
+    sessionStorage.setItem("dbpediaEintrag", JSON.stringify(results));
   }
 
 
