@@ -112,6 +112,7 @@ export class OverlayComponent implements OnInit {
         break;
       default:
         //TODO Lesen Sie die SPARQL - Informationen aus dem SessionStorage und speichern Sie die entsprechenden Informationen zum Gerät
+        sessionStorage.getItem("dbpediaEintrag")
         break;
     }
 
@@ -177,22 +178,12 @@ export class OverlayComponent implements OnInit {
 	var query = "SELECT ?label ?url where {?device a owl:Thing . ?device rdfs:label ?label . ?device dbo:thumbnail ?url . ?device dbo:product ?device . } LIMIT 4";
 	var searchURL = "http://dbpedia.org/sparql?query="+encodeURIComponent(query)+"&format=json";
 
-	this.http.post(searchURL, this.options).toPromise().then(this.extractData);
+	this.http.post(searchURL, this.options).toPromise().then(OverlayComponent.extractData);
   }
   
-  private extractData(res: Response) {
-	//let body = res.json();
-	//Speichern von Strings
-	//var jsObject = JSON.parse(res.json());
-	
-	var dbpediaEintrag = sessionStorage.getItem('dbpediaEintrag');
-	if (!dbpediaEintrag) {
-		//dbpediaEintrag = [];
-		sessionStorage.setItem('dbpediaEintrag',  JSON.parse(res.json()));
-	} else {
-		dbpediaEintrag = JSON.parse(dbpediaEintrag);
-	}
-	
+  private static extractData(res: Response) {
+    console.log("Got devices: " + res.json());
+    sessionStorage.setItem("dbpediaEintrag", res.json());
   }
 
 
