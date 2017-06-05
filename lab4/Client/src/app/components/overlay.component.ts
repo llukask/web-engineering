@@ -45,6 +45,7 @@ export class OverlayComponent implements OnInit {
     this.selected_type = this.device_types[0];
     this.controlUnitType_selected = this.controlUnit_types[0];
     this.getSPARQLTypes();
+	
   }
 
   /**
@@ -180,8 +181,18 @@ export class OverlayComponent implements OnInit {
   }
   
   private extractData(res: Response) {
-	let body = res.json();
-	//return body || {};
+	//let body = res.json();
+	//Speichern von Strings
+	//var jsObject = JSON.parse(res.json());
+	
+	var dbpediaEintrag = sessionStorage.getItem('dbpediaEintrag');
+	if (!dbpediaEintrag) {
+		//dbpediaEintrag = [];
+		sessionStorage.setItem('dbpediaEintrag',  JSON.parse(res.json()));
+	} else {
+		dbpediaEintrag = JSON.parse(dbpediaEintrag);
+	}
+	
   }
 
 
